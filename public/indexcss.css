@@ -1,0 +1,575 @@
+
+
+body,html{
+width:100%;
+margin: 0;
+height: 100%;
+padding:0;
+
+font-size: 52px;
+}
+h1,h2{
+
+    margin: 0;
+
+}
+.nav{
+background-image: white;
+margin: auto;
+height: 80px;
+display: flex;
+
+}
+.logo-holder{
+
+height: 100%;
+display: flex;
+align-items: center;
+
+margin-left: 50px;
+width: 20%;
+
+}
+.nav img{
+
+    width: 20vw;
+    max-width: 150px;
+}
+.nav-title{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  width: 40%;
+  margin-left: 5%;
+
+}
+.title-items{
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+    font-size: 2.5vw;
+    margin-left: 5%;
+
+}
+.container{
+    position: relative;
+
+
+ 
+    width: 100%;
+}
+.background-image{
+    position: relative;
+    width: 100%;
+    z-index: 0;
+}
+.container-block-holder{
+position: absolute;
+top:0;
+display: flex;
+z-index: 2;
+width: 100%;
+height: 100%;
+
+
+}
+.first-block{
+    margin-top: -100px;
+
+    width: 55%;
+    display: grid;
+   align-items: center;
+   justify-content: center;
+
+
+}
+.first-content{
+position: relative;
+    text-align: center;
+}
+.muscle{
+  position: absolute;
+  top:-50%;
+  left:70%;
+  
+  max-width: 50%;
+
+  transform: rotate(-30deg);
+
+}
+.first-content  .first-text{
+color: white;
+position: relative;
+font-size:3vw;
+
+font-family: 'Bebas Neue', cursive;
+
+
+}
+.first-content  .first-text img{
+
+
+    }
+.first-content  .second-text{
+    color: white;
+    font-size: 2.2vw;
+    margin-left: 40%;
+    font-family: 'Bebas Neue', cursive;
+    
+    
+    }
+    .first-content  .third-text{
+   display: flex;
+   flex-wrap: nowrap;
+   font-family: 'Open Sans', sans-serif;
+   margin-left: 25%;
+   margin-top: 5%;
+    }
+    .first-content  .third-text div:first-child{
+    
+       background-color: #ffd230;
+       color:black;
+       border-radius:30px 0px 0px 0px;
+       border-top:  3px solid black;
+       border-left:  3px solid black;
+       border-bottom: 3px solid black;
+   
+       
+         }
+         .first-content  .third-text div:first-child h1{
+            padding: 10px;
+            font-size:4vw;
+              }
+         .first-content  .third-text div:nth-child(2){
+          background-color:#1A4789;
+          border-radius:0px 0px 30px 0px;
+          border-top:  3px solid black;
+          border-right:  3px solid black;
+          border-bottom: 3px solid black;
+        
+          color:white;
+            
+              }
+              .first-content  .third-text div:nth-child(2) h1{
+                padding: 10px;
+                font-size:4vw;
+                
+                  }
+.second-block{
+
+    height: 100%;
+    position: relative;
+width: 45%;
+
+}
+.circle-holder{
+
+   display: flex;
+
+justify-content: end;
+}
+.white-circle{
+    padding: 10%;
+    width: 0.5vw;
+margin-top: 5%;
+margin-right: 5%;
+
+    background: #ffd230;
+    border-radius: 360px;
+   
+}
+
+.image-holder{
+   
+    width: 90%;
+    position: relative;
+    display: flex;
+margin-left: 1%;
+
+}
+.image-border{
+        margin-top: 15%;
+  
+        width: 34vw;
+        min-height: 50px;
+        height: 18vw;
+        
+        display: flex;
+        padding: 5px;
+background-color: grey;
+border-radius: 10px;
+    border: 0.2em solid white;
+}
+.small-image{
+  width: 100%;
+  height: 100%;
+    object-fit: cover contain;
+    margin: auto;
+}.click-holder{
+    margin-top: 15%;
+    margin-left: 5%;
+    width: 6%;
+    position: relative;
+
+}
+#triangle-up {
+    margin-top: -10px;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 1.5vw solid transparent;
+    border-right: 1.5vw solid transparent;
+    border-bottom: 2.5vw solid #891D1D;
+    display: flex;
+ 
+  }
+
+  #triangle-down {
+    position: absolute;
+    bottom: 0;
+ 
+    width: 0;
+    height: 0;
+    border-left: 1.5vw solid transparent;
+    border-right: 1.5vw solid transparent;
+    border-top: 2.5vw solid #891D1D;
+  }
+  #numbers{
+    position: absolute;
+      color: white;
+      bottom:0%;
+      top:35%;
+      font-size: 4vw;
+      font-family: 'Open Sans', sans-serif;
+
+  }
+  #triangle-down:hover,#triangle-up:hover{
+    border-top-color: #ff0404;
+    border-bottom-color: #ff0404;
+    cursor: pointer;
+  }
+  
+
+.simple-box{
+    width: 110%;
+  
+    background-color: white;
+    margin-left: -20%;
+    margin-top: 5%;
+    border-radius: 5px;
+    font-family: 'Quicksand', sans-serif;
+    -webkit-box-shadow: 0 8px 6px -6px white;
+	   -moz-box-shadow: 0 8px 6px -6px white;
+	        box-shadow: 0 10spx 6px -6px white;
+          min-height: 100px;
+  
+      
+}
+#text{
+    text-align:center;
+    padding:2%;
+  
+
+
+font-size: 1.4vw;
+}
+#simple-title{
+    margin: 0;
+    padding: 0;
+    font-size: 2vw;
+    font-family: 'Bebas Neue', cursive;
+    color:#891D1D;
+
+}
+.youtube{
+
+    width: 100%;
+}
+
+
+.second-block-content{
+    width: 100%;
+   
+    text-align: center;
+    padding-bottom: 5%;
+}
+.about-me{
+    position: relative;
+    width: 100%;
+    margin-top: 3%;
+  
+}
+.about-me img{
+   width: 30vw;
+  
+}
+.about-me-flex{
+    display: flex;
+    padding-top: 2%;
+    padding-bottom: 2%;
+
+
+}
+.photo-holder{
+    width: 50%;
+
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+.photo{
+    width: 70%;
+   
+    
+  
+  
+    box-shadow:         3px 3px 5px 6px black; 
+    text-align: right;
+}
+.desc-holder {
+
+    padding-right: 5%;
+    width: 50%;
+
+  
+}
+.desc-holder div{
+ height: 100%;
+    font-size: 2vw;
+    background-image: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(58, 57, 57));
+    color: white;
+    
+    -webkit-box-shadow: 3px 3px 5px 6px black;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    3px 3px 5px 6px black;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         3px 3px 5px 6px black; 
+}
+.desc-holder h1{
+    font-family: 'Bebas Neue', cursive;
+    color:#891D1D;
+    padding-top: 2%;
+       font-size: 6vw;
+   
+   }
+   .desc-holder p{
+    font-family: 'Bebas Neue', cursive;
+    color:white;
+  padding-left: 5%;
+  padding-right: 5%;
+  text-align: justify;
+    font-size: 1.5vw;
+  
+       font-family: 'Open Sans', sans-serif;
+   
+   }
+   .highlight{
+    font-size: 2vw !important;
+    text-align: left;
+    padding-left: 5%;
+   }
+
+   .splide__slide img {
+    width: 100%;
+    height: auto;
+  }
+  .carosel{
+      margin: auto;
+      width: 70%;
+      
+  }
+  .thumbnails {
+    display: flex;
+    margin: 1rem auto 0;
+    padding: 0;
+    justify-content: center;
+  }
+  
+  .thumbnail {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    list-style: none;
+    margin: 0 0.2rem;
+    cursor: pointer;
+  }
+  .splide__slide {
+    opacity: 0.3;
+  }
+  
+  .splide__slide.is-active {
+    opacity: 1;
+  }
+  
+  .thumbnail img {
+    width: 100%;
+    height: auto;
+  }
+  .third-title{
+      text-align: center;
+      padding-top: 5%;
+      padding-bottom: 2%;
+  
+  }
+  .third-title h1{
+  font-size: 3vw;
+  font-family: 'Open Sans', sans-serif;
+   color: black;
+
+    padding-top: 1%;
+    padding-bottom: 2%;
+  }
+  .third-title h1 b{
+
+      color: #891D1D;
+     
+    }
+  .third-title h2{
+    font-size:5vw;   color: black;
+    font-family: 'Bebas Neue', cursive;
+  }
+  .fourth-block-content{
+  
+    background-image: linear-gradient(to bottom right, rgb(0, 0, 0),#5c1b1b);
+    padding-bottom: 2%;
+  }
+  .fourth-title{
+    text-align: center;
+    padding-top: 5%;
+    padding-bottom: 2%;
+
+}
+
+  .fourth-title h1{
+    font-size: 3vw;
+    font-family: 'Open Sans', sans-serif;
+     color: white;
+  
+      padding-top: 1%;
+      padding-bottom: 2%;
+    }
+    .fourth-title h1 b{
+  
+        color: #891D1D;
+       
+      }
+    .fourth-title h2{
+      font-size:5vw;   color: white;
+      font-family: 'Bebas Neue', cursive;
+    }
+   
+  .product-container{
+    display: flex;
+    flex-wrap:  wrap;
+
+column-gap: 5%;
+flex-direction: row;
+    padding: 0%  5%  5%  5%;
+    justify-content: center;
+ 
+  
+  }
+
+
+  .product{
+    position: relative;
+    z-index: 2;
+    min-width: 300px;
+    width: 30%;
+    max-width: 450px;
+ 
+   margin-top: 3%;
+   
+    padding: 0;
+    background-image: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(58, 57, 57));
+    color:white;
+    border-radius: 10px  10px  10px  10px;
+text-align: center;
+padding-bottom: 3%;
+-webkit-box-shadow: 0 10px 6px -6px black;
+-moz-box-shadow: 0 10px 6px -6px black;
+     box-shadow: 5px 4px 10px -2px black;
+
+  }
+  .product:hover{
+  
+    background-image: linear-gradient(to bottom right, #949191, rgb(0, 0, 0));
+
+  }
+  .product:hover > img{
+    filter: brightness(100%);
+
+  }
+  .product img{
+    position: relative;
+    z-index: 1;
+    width: 100%;
+ 
+    border-radius: 10px  10px  0px  0px;
+
+    filter: brightness(50%);
+  
+  }
+  .product h2{
+    width: 90%;
+
+    margin: auto;
+    margin-top: 10px;
+    height: 50px;
+  
+    font-family: 'League Spartan', sans-serif;
+    font-size: 0.6rem;
+  }
+  .product  .hr1{
+    width: 70%;
+  border-color: #891D1D;
+  background-color: #891D1D;
+  padding: 1px;
+  border-radius: 5px;
+   
+  }
+  .product  h1{
+    font-family: 'League Spartan', sans-serif;
+    font-size: 2vw;
+    color: #ff0404;
+   
+  }
+  .product  p{
+    font-family: 'Quicksand', sans-serif;
+    font-size: 0.25rem;
+    color: white;
+    font-weight: bold;
+    padding: 1% 10% 1% 10%;
+    text-align: justify;
+    margin-bottom: 0;
+
+
+  
+  }
+
+
+
+  .product  .hr2{
+    width: 80%;
+  border-color: white;
+  background-color: white;
+  padding: 1px;
+  border-radius: 5px;
+   
+  }
+  .product-desc{
+    height: 200px;
+
+  }
+  .product button{
+
+
+  }
+  .product .icons{
+    display: flex;
+    justify-content: center;
+    column-gap: 10%;
+    
+  }
+  .fa-youtube{
+    text-decoration: none !important;
+    color: white;
+  }

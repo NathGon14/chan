@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="indexcss.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=League+Gothic&family=League+Spartan:wght@400;700&family=Open+Sans:wght@800&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+    <script src="splide.min.js"></script>
+    <link rel="stylesheet" href="splide.min.css">
+
+    <script src="https://kit.fontawesome.com/673ffe1803.js" crossorigin="anonymous"></script>
+
+</head>
+
+
+
+
+<script>
+
+
+      document.addEventListener( 'DOMContentLoaded', function () {
+
+
+        const youtube_list = ["bloS37rIYJQ","00z9p7z7SsA","CL6Z412UKyc"]
+        const text_lists = [
+        "Resistance training provides several health benefits related to enhancing muscle strength, reversing muscle loss, reducing body fat, improving cardiovascular health, enhancing mental health and increasing bone mineral density.",
+          "Fat loss , strength and conditioning , H.I.I.T and Basic Powerlifting."
+        ,`Significantly increased aerobic and anaerobic fitness
+Decreased fasting insulin and increased insulin sensitivity
+Reduced abdominal and subcutaneous (just under the skin) fat`
+       ]
+    const up = document.getElementById("triangle-up")
+    const text = document.getElementById("text")
+    const numbers = document.getElementById("numbers")
+    const down = document.getElementById("triangle-down")
+
+
+        const updateVideo = (number)=>{
+
+  
+  $("#youtube").remove();
+$('<iframe id="youtube" class="youtube"  title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
+.attr("src", "http://www.youtube.com/embed/" + youtube_list[number-1])
+.appendTo("#youtube-frame");
+
+
+text.innerText = text_lists[(number-1)]
+
+}
+const changeVideo=(element)=>{
+
+if(element == up){
+  // up
+  numbers.innerText =  (Number(numbers.innerText)+1)
+ 
+  if((Number(numbers.innerText)) > youtube_list.length){
+
+    numbers.innerText = 1;
+
+    updateVideo(numbers.innerText);
+    return;
+  }
+
+  updateVideo(numbers.innerText);
+
+  
+}
+if(element == down){
+  // up
+  numbers.innerText =  (Number(numbers.innerText)-1)
+  console.log(numbers.innerText)
+  if((Number(numbers.innerText)) <= 0){
+
+    numbers.innerText = youtube_list.length;
+    updateVideo(numbers.innerText);
+    return;
+  }
+
+  updateVideo(numbers.innerText);
+  
+}
+
+
+
+}
+
+        $(down).on("click",()=>{
+
+          changeVideo(down)
+        })
+        $(up).on("click",()=>{
+
+          changeVideo(up)
+     })
+
+
+
+       
+
+     
+        console.log(numbers);
+
+
+
+
+ var splide = new Splide( '#main-slider', {
+  pagination: false,
+    } );
+
+var thumbnails = document.getElementsByClassName( 'thumbnail' );
+var current;
+
+for ( var i = 0; i < thumbnails.length; i++ ) {
+  initThumbnail( thumbnails[ i ], i );
+}
+
+function initThumbnail( thumbnail, index ) {
+  thumbnail.addEventListener( 'click', function () {
+    splide.go( index );
+  } );
+}
+
+splide.on( 'mounted move', function () {
+  var thumbnail = thumbnails[ splide.index ];
+
+  if ( thumbnail ) {
+    if ( current ) {
+      current.classList.remove( 'is-active' );
+    }
+
+    thumbnail.classList.add( 'is-active' );
+    current = thumbnail;
+  }
+} );
+
+splide.mount();
+      });
+  </script>
+<body>
+
+     <!-- nav block -->
+<div class = "nav">
+<div class = "logo-holder">
+
+<img src = "img/logo.png"/>
+
+</div>
+
+<div class = "nav-title">
+    <div class = "title-items">HOME</div>
+    <div class = "title-items">ABOUT</div>
+    <div class = "title-items">PRODUCTS</div>
+</div>
+
+
+
+</div>
+
+ <!-- First block -->
+
+ <div class="container">
+     <img class = "background-image"  src = "/img/background.png"/>
+<div class = 'container-block-holder'>
+    <div class = "first-block">
+        <div class = "first-content">
+          <img class = "muscle" src= "img/muscle.png"/>
+        <div class ="first-text"><h1>Your Own</h1>
+            
+        </div>
+        <div class ="second-text"><h2>Personal Trainer</h2></div>
+        <div class ="third-text">
+            <div><h1>Christian</h1></div>
+
+            <div><h1>Lugar</h1></div>
+        </div>
+    </div>
+
+    </div>
+    <div class = "second-block">
+
+        <div class = "second-content">
+            <div class  = "circle-holder"> 
+                <div class = "white-circle"></div>
+
+            </div>
+      
+            <div class ="image-holder">
+                       <!-- <img class="small-image" src="/img/logo.png" /> -->
+         <div class="image-border" id = "youtube-frame">
+          <iframe id="youtube" class="youtube" src = "http://www.youtube.com/embed/bloS37rIYJQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+         <div class = "click-holder">
+            <div id="triangle-up"></div>
+            <h1 id="numbers">1</h1>
+            <div id="triangle-down"></div>
+
+
+         </div>
+
+
+
+            </div>
+            <Div class="simple-box" >
+        
+            <p id = "text">Resistance training provides several health benefits related to enhancing muscle strength, reversing muscle loss, reducing body fat, improving cardiovascular health, enhancing mental health and increasing bone mineral density.</p>
+
+            </Div>
+
+        </div>
+
+
+    </div>
+
+</div>
+<div>
+
+
+
+    
+</div>
+
+
+  
+</div>
+ <!-- second block -->
+
+
+
+
+ <!-- third block -->
+ <div class = "container">
+    <div class = "second-block-content">
+<div class  ="about-me">
+<img src = "img/barbell.png"/>
+</div>
+
+<div class="about-me-flex">
+    <div class="photo-holder">
+        <img class = "photo" src = "img/vertical.jpg"/>
+
+    </div>
+    <div class="desc-holder">
+        <div>
+        <h1>COACH CHAN</h1>
+        <p> I am a certified personal trainer from American Council on exercise. I have completed courses from the American Council on exercise on nutrition specialist program , and Practicing Equity , Diversity and Inclusion as a Personal Trainer. I participated in two competitions of Powerlifting association of the Philippines last 2021 , I am a bronze medalist. I am also a former anytime fitness coach in paseo and eton tower for 1 ½ year.</p>  
+        <h1 class = "highlight">My goal is simple </h1>
+        <P>I want to help people to become more active , move safely and be confident in what their bodies and mind can do with a healthy lifestyle.</P>
+    </div>
+    </div>
+
+
+</div>
+
+
+ </div>
+</div>
+<div class = "container">
+  <div class = "fourth-block-content">
+      <div class ="fourth-title">
+            <h2>PRODUCTS</h2>
+            <h1>Choose Your <b>PROGRAM</b></h1>
+
+        </div>
+
+    <div class = "product-container">   
+      <div class ="product"> 
+      <img src = "img/carousel-1.jpg"/>
+      <h2>Online Personal Training</h2>
+      <hr class = "hr1">
+      <div class = "product-desc">
+      <p> Free trial will be provided for proper assessment. </p>
+      <p> Will be guided through Zoom application.</p>
+      <p> Provided Excel for clients progress on nutrition , exercises, session,etc,.</p>
+      <p> Customized High Intensity Interval Training Exercises.</p>
+    </div>
+      <div></div>
+      <hr class = "hr2">
+      <div class = "icons">
+        <i class="fa-brands fa-facebook"></i>
+        <a href = "https://www.youtube.com/channel/UCja5Rr0QhJruxrL6smE2IMw" class="fa-brands fa-youtube"></a>
+       
+        <i class="fa-brands fa-linkedin"></i>
+     
+      </div>
+
+      </div>
+      <div class ="product"> 
+        <img src = "img/face.jpg"/>
+        <h2>Face-to-Face Personal Training</h2>
+        <hr class = "hr1">
+        <div class = "product-desc">
+        <p> Free trial will be provided for proper assessment. </p>
+        <p> Provided Excel for clients progress on nutrition , exercises, session,etc,.</p>
+        <p> Customized High Intensity Interval Training Exercises.</p>
+        <p> Option to be guided personally or online.</p>
+      </div>
+        <div></div>
+        <hr class = "hr2">
+        <div class = "icons">
+          <i class="fa-brands fa-facebook"></i>
+          <a href = "https://www.youtube.com/channel/UCja5Rr0QhJruxrL6smE2IMw" class="fa-brands fa-youtube"></a>
+       
+          <i class="fa-brands fa-linkedin"></i>
+       
+        </div>
+  
+        </div>
+        <div class ="product"> 
+          <img src = "img/power.jpg"/>
+          <h2>Basic powerlifting Program</h2>
+          <hr class = "hr1">
+          <div class = "product-desc">
+          <p> This package is for well experienced exerciser</p>
+          <p> Program will be given in an excel sheet good for 1 month </p>
+          <p> Will be guided via sending of videos and feedback through any messenging app</p>
+          <p> Basic powerlifting or strength and conditioning program.</p>
+        </div>
+          <div></div>
+          <hr class = "hr2">
+          <div class = "icons">
+            <i class="fa-brands fa-facebook"></i>
+            <a href = "https://www.youtube.com/channel/UCja5Rr0QhJruxrL6smE2IMw" class="fa-brands fa-youtube"></a>
+       
+            <i class="fa-brands fa-linkedin"></i>
+         
+          </div>
+    
+          </div>
+
+
+    </div>
+
+
+    
+  </div>
+
+
+
+ </div>
+
+ <!-- second block -->
+ <div class = "container" >
+    <div class = "third-block-content" style="background:white;">
+
+        <div class ="third-title">
+            <h2>Certificate</h2>
+            <h1>My <b>Certificate</b> and <b>Achevements</b></h1>
+
+        </div>
+
+        <div class="carosel" >
+            <div id="main-slider" class="splide">
+                <div class="splide__track">
+                  <ul class="splide__list">
+                    <li class="splide__slide">
+                      <img src="img/achievement1.jpg" />
+                    </li>
+                    <li class="splide__slide">
+                        <img src="img/achievement2.jpg" />
+                      </li>
+                
+                      <li class="splide__slide">
+                        <img src="img/achievement3.jpg" />
+                      </li>
+                
+                      <li class="splide__slide">
+                        <img src="img/achievement4.jpg" />
+                      </li>
+
+                  </ul>
+                </div>
+              </div>
+              
+              <ul id="thumbnails" class="thumbnails">
+                <li class="thumbnail">
+                    <img src="img/achievement1.jpg" />
+                  </li>
+                  <li class="thumbnail">
+                      <img src="img/achievement2.jpg" />
+                    </li>
+              
+                    <li class="thumbnail">
+                      <img src="img/achievement3.jpg" />
+                    </li>
+              
+                    <li class="thumbnail">
+                      <img src="img/achievement4.jpg" />
+                    </li>
+                
+              
+              </ul>
+        </div>
+ </div>
+</div>
+      
+
+    
+</body>
+</html>
