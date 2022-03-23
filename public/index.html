@@ -133,6 +133,7 @@ function initThumbnail( thumbnail, index ) {
 
 splide.on( 'mounted move', function () {
   var thumbnail = thumbnails[ splide.index ];
+  console.log(thumbnail)
 
   if ( thumbnail ) {
     if ( current ) {
@@ -381,6 +382,9 @@ splide.mount();
                       <li class="splide__slide">
                         <img src="img/achievement4.jpg" />
                       </li>
+                      <li class="splide__slide">
+                        <img class = "large-image" src="img/achievement5.jpg" />
+                      </li>
                   
 
                   </ul>
@@ -404,6 +408,9 @@ splide.mount();
               
                     <li class="thumbnail">
                       <img src="img/achievement4.jpg" />
+                    </li>
+                    <li class="thumbnail">
+                      <img class = "large-thumbnail" src="img/achievement5.jpg" />
                     </li>
                 
                 

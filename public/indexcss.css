@@ -622,3 +622,16 @@ padding-bottom: 3%;
     text-decoration: none !important;
     color: white;
   }
+.large-image{
+  height: 50vw !important ;
+  width: 40vw !important ;
+
+  margin: auto;
+}
+.splide__slide {
+  text-align: center;
+}
+.large-thumbnail{
+  height: 6vw !important ;
+  width: 100% !important ;
+}
