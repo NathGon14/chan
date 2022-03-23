@@ -14,11 +14,18 @@ h1,h2{
 
 }
 .nav{
-background-image: white;
+background: white;
 margin: auto;
 height: 80px;
 display: flex;
 
+top:0;
+border:5px solid black;
+
+  position: fixed;
+  width:100%;
+
+  z-index: 100;
 }
 .logo-holder{
 
@@ -43,13 +50,52 @@ width: 20%;
   width: 40%;
   margin-left: 5%;
 
+
+
 }
 .title-items{
     font-family: 'League Spartan', sans-serif;
     font-weight: 700;
     font-size: 2.5vw;
     margin-left: 5%;
+    color: black !important;
+    position: relative;
+    text-decoration: none;
 
+
+}
+
+.title-items::after{
+  position: absolute;
+  content: '';
+  height:3px;
+/* adjust this to move up and down. you may have to adjust the line height of the paragraph if you move it down a lot. */
+  bottom: -4px; 
+
+
+ /****** 
+ optional values below 
+ ******/
+  
+  /* center - (optional) use with adjusting width   */
+  margin: 0 auto;
+left: 0;
+  right: 0;
+width: 50%;
+background: #ffd230;
+
+/* optional animation */
+-o-transition:.5s;
+  -ms-transition:.5s;
+  -moz-transition:.5s;
+  -webkit-transition:.5s;
+  transition:.5s;
+}
+
+
+.title-items:hover::after{
+  width: 90%;
+  background: #1A4789;
 }
 .container{
     position: relative;
@@ -57,6 +103,9 @@ width: 20%;
 
  
     width: 100%;
+}
+.container-top{
+  margin-top: 80px;
 }
 .background-image{
     position: relative;
