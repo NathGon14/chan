@@ -1,7 +1,7 @@
 
 const express = require("express")
 
-
+const port = process.env.PORT || 5000;
 const app = express();
 
 
@@ -15,7 +15,7 @@ res.sendFile(__dirname+"/public/index.html")
 
 })
 
-app.listen(8000,()=>{
+app.listen(port,()=>{
 
 console.log("listening")
 
