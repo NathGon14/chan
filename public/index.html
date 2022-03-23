@@ -114,6 +114,8 @@ if(element == down){
 
  var splide = new Splide( '#main-slider', {
   pagination: false,
+  lazyLoad:true,
+  rewind:true
     } );
 
 var thumbnails = document.getElementsByClassName( 'thumbnail' );
@@ -159,6 +161,7 @@ splide.mount();
     <a href ="#home" class = "title-items">HOME</a>
     <a href ="#about" class = "title-items">ABOUT</a>
     <a href ="#products" class = "title-items">PRODUCTS</a>
+    <a href ="#certificate" class = "title-items">CERTIFICATE</a>
 </div>
 
 
@@ -348,7 +351,7 @@ splide.mount();
  </div>
 
  <!-- second block -->
- <div class = "container" >
+ <div id = "certificate" class = "container" >
     <div class = "third-block-content" style="background:white;">
 
         <div class ="third-title">
@@ -361,6 +364,9 @@ splide.mount();
             <div id="main-slider" class="splide">
                 <div class="splide__track">
                   <ul class="splide__list">
+                    <li class="splide__slide">
+                      <img src="img/achievement6.jpg" />
+                    </li>
                     <li class="splide__slide">
                       <img src="img/achievement1.jpg" />
                     </li>
@@ -375,12 +381,16 @@ splide.mount();
                       <li class="splide__slide">
                         <img src="img/achievement4.jpg" />
                       </li>
+                  
 
                   </ul>
                 </div>
               </div>
               
               <ul id="thumbnails" class="thumbnails">
+                <li class="thumbnail">
+                  <img src="img/achievement6.jpg" />
+                </li>
                 <li class="thumbnail">
                     <img src="img/achievement1.jpg" />
                   </li>
@@ -395,6 +405,7 @@ splide.mount();
                     <li class="thumbnail">
                       <img src="img/achievement4.jpg" />
                     </li>
+                
                 
               
               </ul>
