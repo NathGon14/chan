@@ -147,6 +147,18 @@ splide.on( 'mounted move', function () {
 
 splide.mount();
       });
+
+
+      function showNav(){
+        const nav = document.getElementsByClassName("nav-title")[0];
+const display = nav.style.display;
+     console.log(display)
+        if(display =="none" || display ==""){
+
+         return nav.style.display = "block";
+        } 
+        nav.style.display = "none";
+      }
   </script>
 <body>
 
@@ -157,7 +169,7 @@ splide.mount();
 <img src = "img/logo.png"/>
 
 </div>
-
+<diV onclick ="showNav()" class="fa-solid fa-bars icon"></diV>
 <div class = "nav-title">
     <a href ="#home" class = "title-items">HOME</a>
     <a href ="#about" class = "title-items">ABOUT</a>
@@ -172,7 +184,7 @@ splide.mount();
  <!-- First block -->
 
  <div   class="container container-top">
-     <img class = "background-image"  src = "/img/background.png"/>
+     <img class = "background-image"  src = "img/background.png"/>
 <div class = 'container-block-holder'>
     <div class = "first-block">
         <div class = "first-content">
@@ -203,9 +215,10 @@ splide.mount();
           <iframe id="youtube" class="youtube" src = "https://www.youtube.com/embed/bloS37rIYJQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   </div>
          <div class = "click-holder">
-            <div id="triangle-up"></div>
+        
+            <i id="triangle-up" class="fa-solid fa-backward-step"></i>
             <h1 id="numbers">1</h1>
-            <div id="triangle-down"></div>
+            <i id="triangle-down" class="fa-solid fa-forward-step"></i>
 
 
          </div>

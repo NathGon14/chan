@@ -61,7 +61,7 @@ width: 15%;
     color: black !important;
     position: relative;
     text-decoration: none;
-
+    padding: 0em;
 
 }
 
@@ -255,46 +255,41 @@ border-radius: 10px;
     object-fit: cover contain;
     margin: auto;
 }.click-holder{
-    margin-top: 15%;
+    margin-top: 23%;
     margin-left: 5%;
     width: 6%;
     position: relative;
+   height: 100%;
 
 }
 #triangle-up {
-    margin-top: -10px;
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 1.5vw solid transparent;
-    border-right: 1.5vw solid transparent;
-    border-bottom: 2.5vw solid #891D1D;
-    display: flex;
  
-  }
+color: #891D1D;
+transform: rotate(90deg);
 
-  #triangle-down {
-    position: absolute;
-    bottom: 0;
+
+}
+#triangle-down {
  
-    width: 0;
-    height: 0;
-    border-left: 1.5vw solid transparent;
-    border-right: 1.5vw solid transparent;
-    border-top: 2.5vw solid #891D1D;
-  }
+  color: #891D1D;
+  transform: rotate(90deg);
+
+
+}
+#numbers {
+  
+
+  color: white;
+  text-align: center;
+}
   #numbers{
-    position: absolute;
-      color: white;
-      bottom:0%;
-      top:35%;
       font-size: 4vw;
       font-family: 'Open Sans', sans-serif;
 
   }
   #triangle-down:hover,#triangle-up:hover{
-    border-top-color: #ff0404;
-    border-bottom-color: #ff0404;
+   color: #ff0404;
+    
     cursor: pointer;
   }
   
@@ -635,3 +630,332 @@ padding-bottom: 3%;
   height: 6vw !important ;
   width: 100% !important ;
 }
+
+@media (min-width:320px) and (max-width:900px)  { 
+   /* smartphones, iPhone, portrait 480x320 phones */  
+
+  
+   .nav{
+     border:0px;
+     position: relative;
+
+     display: block;
+     height: auto;
+  
+   
+
+   }.nav img{
+     width: 200px;
+    
+   }
+     .logo-holder{
+      margin: 0;
+        padding: 0.1em 0.1em 0.1em 0.1em;
+  
+
+    }
+    .logo-holder{
+      margin: 0;
+
+    }
+    .icon{
+
+      position: absolute;
+      font-size: 1em;
+      top:2%;
+      padding: 0.1em 0.1em 0.1em 0.1em;
+      right: 0;
+      color:#ffd230;
+      margin-right: 2%;
+    }
+    .nav-title{
+      all: unset;
+      display: block;
+      text-align: center;
+      width: 100%;
+      margin: 0;
+      display: none;
+    }
+    .nav-title a{
+   margin: 0;
+background-color: black;
+      display: block;
+      width: 100%;
+      padding: 1em 0em 1em 0em;
+      color: white !important;
+      font-size:1em;
+    }.nav-title a::after{
+      all: unset;
+  
+       }
+       .background-image{
+         position: absolute;
+       }
+       .container-top{
+      margin-top: 0;
+
+       }.container-block-holder{
+          position: relative;
+     
+          flex-direction:column;
+       }
+       .first-block{
+        margin-top: 7%;
+
+        width: 100%;
+        padding-bottom: 6%;
+
+       }
+     
+       .first-content .first-text{
+        font-size: 5vw;
+     text-align: left;
+     margin-left: 5%;
+      }
+      .muscle{
+
+   
+        top: -22%;
+        left: 78%;
+      
+      
+      }
+      .circle-holder{
+        display: none;
+      }
+      .first-content .second-text{
+        font-size: 5vw;
+        margin-left: 10%;
+      }
+      .first-content .third-text{
+         width: 100%;
+         margin-left: 5%;
+       }
+       .first-content .third-text div:first-child h1{ 
+        font-size: 7vw;
+      }
+      .first-content .third-text div:nth-child(2) h1{ 
+        font-size:7vw;
+       }
+       
+       .second-block{
+        position: relative;
+        top:-5px;
+          width: 100%;
+          background-image: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(58, 57, 57));
+          padding: 1em 0em 1em 0em;
+
+       }
+       .image-holder{
+        all:unset;
+        display: block;
+        height: 100%;
+        
+       }
+       .youtube{
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+       }
+       .image-border {
+        margin:auto;
+    width:90%;
+    min-height: auto;
+ 
+    padding: 0px;
+
+    border-radius: 3px;
+    border: 5px solid white;
+    position: relative;
+     padding-bottom: 56.25%; 
+     padding-top: 30px;
+      height: 0; 
+      overflow: hidden;
+       
+    }
+    .click-holder {
+    
+ 
+      margin-top: 0%;
+      margin-left: 0%;
+      width: 100%;
+      display: grid;
+
+      position: relative;
+      text-align: center;
+      grid-template-columns: repeat(3, 1fr);
+
+  }
+  #triangle-up {
+  padding-top: 7px;
+color: #891D1D;
+    font-size: 0.7em;
+    transform: rotate(0deg);
+
+}
+#triangle-down {
+  padding-top: 7px;
+  color: #891D1D;
+  font-size: 0.7em;
+  transform: rotate(0deg);
+
+}
+#numbers {
+  font-size: 0.7em;
+
+  color: white;
+  text-align: center;
+}
+.simple-box{
+
+  width: 90%;
+  background-color: white;
+
+  margin-top: 0%;
+  border-radius: 5px;
+
+ 
+  margin: auto;
+
+  min-height: auto;
+}
+
+
+#text {
+  font-size:0.5em;
+
+}
+
+.about-me{
+  margin-top: 0.5em;
+}
+.about-me img {
+  width:70%;
+}
+.about-me-flex{
+  display: block;
+  text-align: center;
+
+}
+.photo-holder {
+  width:100%;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+.photo {
+  width: 70%;
+  box-shadow: 1px 1px 1px 1px black;
+  text-align: right;
+}
+.desc-holder {
+
+  width:100%;
+
+  margin-top: 5%;
+  display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+
+.desc-holder div {
+
+  
+  width:90%;
+  margin: auto;
+  
+}
+
+.desc-holder h1 {
+  font-family: 'Bebas Neue', cursive;
+  color: #891D1D;
+  padding-top: 2%;
+  font-size: 6em;
+}
+.desc-holder p {
+
+  font-size: 2em;
+  
+}
+.highlight {
+  font-size: 3em !important;
+  text-align: left;
+  padding-left: 5%;
+}
+.fourth-block-content{
+  padding: 1em 0 1em 0;
+}
+
+
+.fourth-title h2{
+  font-size: 1.5em;
+
+
+}
+
+.fourth-title h1{
+
+  font-size:0.6em;
+}
+
+.product{
+
+ width: 100%;
+ padding-bottom: 1em;
+ margin-top: 1em;
+}
+.third-title h2 {
+  font-size: 1.5em;
+}
+
+.third-title h1 {
+  font-size:0.5em;
+}
+.carosel {
+  margin: auto;
+  width: 100%;
+}
+
+.large-image {
+  height:90vw !important;
+  width:80vw !important;
+  margin: auto;
+}
+
+.large-thumbnail {
+  height: 10vw !important;
+  width: 100% !important;
+}
+
+
+}
+@media (min-width:901px)  { 
+
+
+  .icon{
+
+    display: none !important;
+  }
+
+}
+
+
+@media (min-width:481px)  { /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */ 
+
+ 
+}
+@media (min-width:641px)  { 
+ /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */ 
+
+ 
+ 
+}
+
+
+@media (min-width:961px)  { /* tablet, landscape iPad, lo-res laptops ands desktops */ }
+
+
+
+
+
+@media (min-width:1025px) { /* big landscape tablets, laptops, and desktops */ }
+@media (min-width:1281px) { /* hi-res laptops and desktops */ }
