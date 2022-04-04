@@ -156,9 +156,39 @@ const display = nav.style.display;
         if(display =="none" || display ==""){
 
          return nav.style.display = "block";
-        } 
-        nav.style.display = "none";
+        }
+          nav.style.display = "none";
+       
+          console.log(recentlyOpened)
+      
       }
+
+      closeNav()
+function closeNav (){
+
+  $(document).on("click",function (e){
+
+    const nav = document.getElementsByClassName("nav-title")[0];
+const display = nav.style.display;
+
+
+
+if($(e.target)[0] != $("#navIcon")[0]){
+
+return  nav.style.display = "none";
+
+
+}
+ 
+
+
+
+})
+
+}
+       
+let recentlyOpened = false;
+
   </script>
 <body>
 
@@ -169,7 +199,7 @@ const display = nav.style.display;
 <img src = "img/logo.png"/>
 
 </div>
-<diV onclick ="showNav()" class="fa-solid fa-bars icon"></diV>
+<diV onclick ="showNav()" id="navIcon" class="fa-solid fa-bars icon"></diV>
 <div class = "nav-title">
     <a href ="#home" class = "title-items">HOME</a>
     <a href ="#about" class = "title-items">ABOUT</a>
@@ -290,7 +320,7 @@ const display = nav.style.display;
 
     <div class = "product-container">   
       <div class ="product"> 
-      <img src = "img/carousel-1.jpg"/>
+      <img src = "img/online.jpg"/>
       <h2>Online Personal Training</h2>
       <hr class = "hr1">
       <div class = "product-desc">
