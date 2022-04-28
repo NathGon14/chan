@@ -12,11 +12,12 @@ const server = http.createServer(app);
 
 const io = new Server(server);
 
-const serverForPeer = http.createServer(app);
 
-const peerServer = ExpressPeerServer(serverForPeer)
+const peerServer = ExpressPeerServer(server, {
+  debug: true,
+});
 
-app.use('/peerjs', peerServer);
+app.use("/peerjs", peerServer);
 
 peerServer.on('connection', (client) => { 
 console.log(client);
@@ -112,11 +113,7 @@ server.listen(port,()=>{
 
 })
 
-serverForPeer.listen(443,()=>{
 
-    console.log("porrt")
-    
- })
 
 
   
