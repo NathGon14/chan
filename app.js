@@ -5,7 +5,7 @@ const { PeerServer } = require('peer');
 const { Server } = require("socket.io");
 const http = require('http');
 const app = express();
-const fs = require("fs")
+
 
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
@@ -20,7 +20,7 @@ const peerServer = ExpressPeerServer(server, {
 app.use("/peerjs", peerServer);
 
 peerServer.on('connection', (client) => { 
-console.log(client);
+
   
 
 });

@@ -252,7 +252,8 @@ let contraints =()=>{
   }else{
     facingMode = "environment"
   }
-  return {facingMode:facingMode}
+
+  return facingMode
 
 }
 function cameraSwitch(){
@@ -260,12 +261,13 @@ function cameraSwitch(){
   if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
     // console.log(peerConnections)
     // console.log(peer)
+    const contraint = contraints();
 
   }const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-  getUserMedia({video:contraints, audio: true}, function(stream) {
+  getUserMedia({video:{facingMode:contraint}, audio: true}, function(stream) {
 
-    $("video")[0].srcObject = stream
+   $("video")[0].srcObject = stream
 
 
   })
@@ -423,8 +425,9 @@ function toggleVideoSettings(what,ID){
 
 function turnOffCamera(element){
 
-  toggleVideoSettings("camera",userID)
 
+  if(myLocalStream == null) return
+  toggleVideoSettings("camera",userID)
   socket.emit("sendToggle",{what:"camera",ID:userID})
 
   $(element).removeClass()
@@ -432,15 +435,18 @@ function turnOffCamera(element){
   if(myLocalStream.getVideoTracks()[0].enabled){
   myLocalStream.getVideoTracks()[0].enabled = false
   $(element).addClass("fa-solid fa-video-slash")
-
+  
     return
   }
   $(element).addClass("fa-solid fa-video")
   myLocalStream.getVideoTracks()[0].enabled = true
 
+
 }
 
 function turnOffMic(element){
+  if(myLocalStream == null) return
+  
   toggleVideoSettings("mic",userID)
   socket.emit("sendToggle",{what:"mic",ID:userID})
 
@@ -629,6 +635,9 @@ function createVideoWrapper(stream,ID){
   videoelemet.srcObject = stream
  
   $(divElement).append(videoelemet)
+  videoelemet.on("loadedmetadata",()=>{
+    videoelemet.play()
+   })
  
   $(videoContainer).append(divElement)
 
@@ -649,6 +658,9 @@ function createMyStream(stream,ID){
   videoelemet.srcObject = stream
  
   $(divElement).append(videoelemet)
+ videoelemet.on("loadedmetadata",()=>{
+  videoelemet.play()
+ })
  
   $(videoContainer).prepend(divElement)
 
