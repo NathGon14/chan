@@ -1,37 +1,33 @@
 
 const express = require("express")
 const { ExpressPeerServer } = require('peer');
-const { PeerServer } = require('peer');
-const { Server } = require("socket.io");
+const Socket  = require("socket.io");
 const http = require('http');
 const app = express();
-const appIO = express();
-
-
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
-const ioServer = http.createServer(appIO);
 
-const io = new Server(ioServer);
-
-// const serverpeer = http.createServer(app);
-
-
-const peerServer = ExpressPeerServer(server, {
-  debug: true,
-  // path:"/"
-  
+ 
+ const socketServer = Socket(server, {
+  path: '/socket.io'
 });
+
+const { PeerServer } = require('peer');
+
+const peerServer = PeerServer({ port: 3030, path: '/myapp' });
+
 // serverpeer.listen(9000)
 
-app.use("/peerjs", peerServer);
+
+
+// app.use("/peerjs", peerServer);
 
 
 
 
 
 
-io.on("connection", (socket) => {
+socketServer.on("connection", (socket) => {
  
     socket.on("joining",(param)=>{
     
@@ -52,11 +48,6 @@ io.on("connection", (socket) => {
 
 })
 
-
-
-  
-
-
   socket.on("disconnecting", (reason) => {
 
   socket.to(getRoom(socket)).emit("leave",socket.id)
@@ -66,7 +57,7 @@ io.on("connection", (socket) => {
   });
   });
 
-  ioServer.listen(3030)
+  
 
   
   function getRoom(socket){
@@ -117,9 +108,12 @@ app.get("/room/:id",(req,res)=>{
 
 server.listen(port,()=>{
 
-
+console.log(port+" listing")
 
 })
+
+
+
 
 
 
