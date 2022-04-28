@@ -5,12 +5,14 @@ const { PeerServer } = require('peer');
 const { Server } = require("socket.io");
 const http = require('http');
 const app = express();
+const appIO = express();
 
 
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
+const ioServer = http.createServer(appIO);
 
-const io = new Server(server);
+const io = new Server(ioServer);
 
 // const serverpeer = http.createServer(app);
 
@@ -24,11 +26,7 @@ const peerServer = ExpressPeerServer(server, {
 
 app.use("/peerjs", peerServer);
 
-peerServer.on('connection', (client) => { 
 
-  
-
-});
 
 
 
@@ -67,6 +65,9 @@ io.on("connection", (socket) => {
 
   });
   });
+
+  ioServer.listen(3030)
+
   
   function getRoom(socket){
 

@@ -271,8 +271,10 @@ if(videoDevices ==null) videoDevices = await getDevices()
 
     getUserMedia({video:{deviceId:videoDevices[deviceIdIndex]}, audio: true}, function(stream) {
 
+      stopStream(myLocalStream)
       myLocalStream = stream;
       const peerConnection = peerConnections.map(e=>{return e.peerConnection})
+      console.log(peerConnection);
  
       let videoTrack = stream.getVideoTracks()[0];
         peerConnection.forEach(function(pc) {
@@ -291,6 +293,18 @@ if(videoDevices ==null) videoDevices = await getDevices()
   
  
 
+
+
+}
+function stopStream(stream) {
+
+
+  if(stream == null)return
+  const tracks = stream.getTracks();
+
+  tracks.forEach(function(track) {
+    track.stop();
+  });
 
 
 }
