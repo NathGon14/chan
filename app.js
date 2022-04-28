@@ -14,7 +14,7 @@ const server = http.createServer(app);
 
 const { PeerServer } = require('peer');
 
-const peerServer = PeerServer({ port: 443, path: '/myapp' });
+const peerServer = PeerServer({ path: '/myapp' });
 
 // serverpeer.listen(9000)
 
@@ -22,6 +22,9 @@ peerServer.on("connection",(client)=>{
   console.log(client);
 })
 
+peerServer.listen(443,()=>{
+  console.log("kisnting")
+})
 
 
 
