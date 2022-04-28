@@ -15,13 +15,13 @@ const serverForPeer = http.createServer(app);
 
 const peerServer = ExpressPeerServer(serverForPeer, {
   debug: true,
-  path: '/'
+  path: '/myapp'
 });
 
 app.use('/peerjs', peerServer);
 
 peerServer.on('connection', (client) => { 
-// console.log(client);
+console.log(client);
   
 
 });

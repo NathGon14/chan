@@ -76,7 +76,7 @@ function getCookie(cname) {
 const peer = new Peer({
     host: '/',
     port: 9000,
-    path: '/peerjs'
+    path: '/myapp'
   });
 
 
@@ -266,7 +266,7 @@ function cameraSwitch(){
 
   getUserMedia({video:contraints, audio: true}, function(stream) {
 
-    vide.srcObject = stream
+    $("video")[0].srcObject = stream
 
 
   })
