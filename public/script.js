@@ -74,9 +74,11 @@ function getCookie(cname) {
 
   
 const peer = new Peer({
-    host: '/',
-    port: 9000,
-    path: '/myapp'
+    host: 'coachchan.herokuapp.com',
+    port: "443",
+    path: '/peerjs',
+    secure: true
+
   });
 
 

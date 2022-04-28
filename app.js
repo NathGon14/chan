@@ -5,6 +5,7 @@ const { PeerServer } = require('peer');
 const { Server } = require("socket.io");
 const http = require('http');
 const app = express();
+const fs = require("fs")
 
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
@@ -13,10 +14,7 @@ const io = new Server(server);
 
 const serverForPeer = http.createServer(app);
 
-const peerServer = ExpressPeerServer(serverForPeer, {
-  debug: true,
-  path: '/myapp'
-});
+const peerServer = ExpressPeerServer(serverForPeer)
 
 app.use('/peerjs', peerServer);
 
@@ -114,7 +112,7 @@ server.listen(port,()=>{
 
 })
 
-serverForPeer.listen(9000,()=>{
+serverForPeer.listen(443,()=>{
 
     console.log("porrt")
     
