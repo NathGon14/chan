@@ -635,7 +635,7 @@ function createVideoWrapper(stream,ID){
   videoelemet.srcObject = stream
  
   $(divElement).append(videoelemet)
-  videoelemet.on("loadedmetadata",()=>{
+ $(videoelemet).on("loadedmetadata",()=>{
     videoelemet.play()
    })
  
@@ -658,9 +658,9 @@ function createMyStream(stream,ID){
   videoelemet.srcObject = stream
  
   $(divElement).append(videoelemet)
- videoelemet.on("loadedmetadata",()=>{
-  videoelemet.play()
- })
+  $(videoelemet).on("loadedmetadata",()=>{
+    videoelemet.play()
+   })
  
   $(videoContainer).prepend(divElement)
 
