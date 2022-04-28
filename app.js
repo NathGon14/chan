@@ -12,10 +12,10 @@ const server = http.createServer(app);
 
 const io = new Server(server);
 
-const serverpeer = http.createServer(app);
+// const serverpeer = http.createServer(app);
 
 
-const peerServer = ExpressPeerServer(serverpeer, {
+const peerServer = ExpressPeerServer(server, {
   debug: true,
   // path:"/"
   
