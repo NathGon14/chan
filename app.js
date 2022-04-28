@@ -17,10 +17,10 @@ const serverpeer = http.createServer(app);
 
 const peerServer = ExpressPeerServer(serverpeer, {
   debug: true,
-  path:"/"
+  // path:"/"
   
 });
-serverpeer.listen(9000)
+// serverpeer.listen(9000)
 
 app.use("/peerjs", peerServer);
 
