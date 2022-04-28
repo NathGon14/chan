@@ -1,0 +1,99 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://unpkg.com/peerjs@1.3.2/dist/peerjs.min.js"></script>
+    <script src="https://cdn.socket.io/4.4.1/socket.io.min.js" integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H" crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+  crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Concert+One&family=Fredoka+One&family=Lobster&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/673ffe1803.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../video.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id ="notification-up"></div>
+    <div class ="main-body">
+        <div class = "clickable">
+            <div id = "messageBox"><div id = "messageNotif"><span>0</span></div><i class="fa-solid fa-message"></i></div>
+            <div onclick="manualPickGrid()"><i class="fa-solid fa-grip"></i></div>
+            <div onclick="askForName()"><i class="fa-solid fa-pencil"></i></div>
+        </div>
+        <!--aboslute-->
+        <div class = "overlay">
+            <div class = "options">
+                 <div class="option-container">
+                    <div><i onclick = "cameraSwitch(this)"class="fa-solid fa-camera-rotate"></i></div>
+                    <div><i  onclick = "turnOffCamera(this)" class="fa-solid fa-video"></i></div>
+                    <div><i onclick = "turnOffMic(this)"class="fa-solid fa-microphone"></i></div>
+                    <div><i class="fa-solid fa-right-from-bracket"></i></div>
+                 </div>
+            </div>
+        </div>
+
+        
+
+          <!--aboslute-->
+     
+        <div class = "video-conatiner">
+        <div id = "videoContainer" class = "video-grid-1"></div>
+
+        <div class = "changer">
+            <div><i id ="backward" class="fa-solid fa-angle-left"></i></div>
+            <div><i id ="forward" class="fa-solid fa-angle-right"></i></div>
+        </div>
+        
+        </div>
+  
+     <div class ="small-video-holder">
+
+
+     </div>
+    </div>
+
+    <div id = "sideBody" class ="side-body">
+        <div class = "header"><i id ="back" class="fa-solid fa-arrow-left"></i><span>Coach Chan</span></div>
+        <div class = "picker"><div class = "active chooser" data-href = "#chatbox" ><span><i class="fa-solid fa-message"></i><span>Chat</span></span></div><div class = "chooser" data-href = "#roomContainer" ><span><i class="fa-solid fa-house-chimney-user"></i><span>Room Info</span></span></div></div>
+        <div id = "chatbox" class="chat-box">
+        <div id = "chat" class="chat-container"></div>
+        
+        <Div class="message-box">
+            <div>
+                <textarea id ="message" rows="2" placeholder="Input Your Message" ></textarea>
+            </div>
+            <div id ="send">
+                <i class="fa-solid fa-paper-plane"></i>
+            </div>
+     
+    
+        </Div>
+    
+    </div>
+  
+        <div id ="roomContainer" class="room-container">
+            <div class = "room-head">
+             <div><i class="fa-solid fa-users"></i><span id="numberUsers"></span></div>
+             <div><i class="fa-solid fa-key"></i><span>asdasd-asdasdas-asadasdasd</span></div>
+            </div>
+            <Div id ="users" class  = "user-holder"></Div>
+           
+
+        </div>
+    </div>
+
+<script src ="../script.js"></script>
+
+
+
+
+
+    
+</body>
+</html>

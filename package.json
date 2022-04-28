@@ -4,7 +4,10 @@
   },
   "dependencies": {
     "@splidejs/splide": "^3.6.12",
-    "express": "^4.17.3"
+    "ejs": "^3.1.7",
+    "express": "^4.17.3",
+    "peer": "^0.6.1",
+    "socket.io": "^4.5.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
