@@ -12,10 +12,15 @@ const server = http.createServer(app);
 
 const io = new Server(server);
 
+const serverpeer = http.createServer(app);
 
-const peerServer = ExpressPeerServer(server, {
+
+const peerServer = ExpressPeerServer(serverpeer, {
   debug: true,
+  path:"/"
+  
 });
+serverpeer.listen(9000)
 
 app.use("/peerjs", peerServer);
 
@@ -24,6 +29,8 @@ peerServer.on('connection', (client) => {
   
 
 });
+
+
 
 
 io.on("connection", (socket) => {

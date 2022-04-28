@@ -75,7 +75,7 @@ function getCookie(cname) {
   const peer = new Peer( {
     path: "/peerjs",
     host: "/",
-    port: "443",
+    port: "9000",
   });
 
 
@@ -240,42 +240,72 @@ const leaverName = localData.find((e)=> e["userID"] == id)
 }
 let call;
 let peerConnections = [];
-
+let videoDevices = null
 
 // on open will be launch when you successfully connect to PeerServer
 
-let facingMode = "environment"
-let contraints =()=>{
 
-  if(facingMode == "environment"){
-    facingMode = "user"
-  }else{
-    facingMode = "environment"
-  }
+ async function getDevices() {
+  const devices =  await navigator.mediaDevices.enumerateDevices();
+    let deviceVid = devices.filter(e=>{
+      if(e.kind =="videoinput") return e.deviceId
 
-  return facingMode
-
+    })
+     deviceVid = deviceVid.map(e=>{
+      return e.deviceId
+    })
+ 
+    return deviceVid
 }
-function cameraSwitch(){
+
+let deviceIdIndex = 0;
+
+async function cameraSwitch(){
+if(videoDevices ==null) videoDevices = await getDevices()
+  deviceIdIndex++;
+  if(deviceIdIndex >= videoDevices.length) deviceIdIndex = 0;
 
   if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-    // console.log(peerConnections)
-    // console.log(peer)
+
+    const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+    getUserMedia({video:{deviceId:videoDevices[deviceIdIndex]}, audio: true}, function(stream) {
+
+      myLocalStream = stream;
+      const peerConnection = peerConnections.map(e=>{return e.peerConnection})
  
+      let videoTrack = stream.getVideoTracks()[0];
+        peerConnection.forEach(function(pc) {
+        var sender = pc.getSenders().find(function(s) {
+          return s.track.kind == videoTrack.kind;
+        });
+       
+        sender.replaceTrack(videoTrack);
+      });
 
-  }const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-  getUserMedia({video:{facingMode:contraints()}, audio: true}, function(stream) {
-
-   $("video")[0].srcObject = stream
-
-
-  })
+ 
+    }, function(err) {
+      console.log(err)
+    })
+  }
+  
+ 
 
 
 
 }
+function stopStreamedVideo(videoElem) {
 
+  const stream = videoElem.srcObject;
+  if(stream == null)return
+  const tracks = stream.getTracks();
+
+  tracks.forEach(function(track) {
+    track.stop();
+  });
+
+  videoElem.srcObject = null;
+}
 
 
 // first joingin
@@ -317,10 +347,11 @@ async function joining(peer,peerID,socket){
 
 const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-getUserMedia({video: {facingMode:"user"}, audio: true}, function(stream) {
+getUserMedia({video: {facingMode:"environment"}, audio: true}, function(stream) {
   myLocalStream = stream;
 
   createVideoWrapper(stream,userID)
+  console.log("hehehe")
   peer.on('call', function(call) {
     numberOfUser++;
     caller = call
@@ -426,7 +457,7 @@ function toggleVideoSettings(what,ID){
 function turnOffCamera(element){
 
 
-  if(myLocalStream == null) return
+  if(myLocalStream == null || myLocalStream =="" ) return
   toggleVideoSettings("camera",userID)
   socket.emit("sendToggle",{what:"camera",ID:userID})
 
@@ -445,7 +476,7 @@ function turnOffCamera(element){
 }
 
 function turnOffMic(element){
-  if(myLocalStream == null) return
+  if(myLocalStream == null || myLocalStream =="" ) return
   
   toggleVideoSettings("mic",userID)
   socket.emit("sendToggle",{what:"mic",ID:userID})
@@ -653,6 +684,7 @@ function createMyStream(stream,ID){
 
   const videoelemet = document.createElement("video")
   $(videoelemet).attr("autoplay",true)
+  $(videoelemet).attr("mute",true)
   $(videoelemet).data("data-id",ID)
   
   videoelemet.srcObject = stream
