@@ -14,13 +14,13 @@ const server = http.createServer(app);
 
 const { PeerServer } = require('peer');
 
-const peerServer = PeerServer({ port: 3030, path: '/myapp' });
+const peerServer = PeerServer({ port: 443, path: '/myapp' });
 
 // serverpeer.listen(9000)
 
-
-
-// app.use("/peerjs", peerServer);
+peerServer.on("connection",(client)=>{
+  console.log(client);
+})
 
 
 

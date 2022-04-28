@@ -75,7 +75,7 @@ function getCookie(cname) {
   const peer = new Peer( {
     path: "/myapp",
     host: "/",
-    port: "3030"
+    port: "443"
   });
 
 
