@@ -261,11 +261,11 @@ function cameraSwitch(){
   if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
     // console.log(peerConnections)
     // console.log(peer)
-    const contraint = contraints();
+ 
 
   }const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-  getUserMedia({video:{facingMode:contraint}, audio: true}, function(stream) {
+  getUserMedia({video:{facingMode:contraints()}, audio: true}, function(stream) {
 
    $("video")[0].srcObject = stream
 
