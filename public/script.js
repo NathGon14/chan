@@ -428,11 +428,12 @@ function swapVideo(mystream,theirStream,ID){
 if($(videoContainer).children().length > 1) return
 
 $(".video-wrapper")[0].remove()
+
 createMyStream(mystream,userID)
 
 
 
-createVideoWrapper(theirStream,userID)
+createVideoWrapper(theirStream,ID)
 
 
 
@@ -720,13 +721,14 @@ function createMyStream(stream,ID){
 
   const videoelemet = document.createElement("video")
   $(videoelemet).attr("autoplay",true)
-  $(videoelemet).attr("muted","muted")
+ 
   $(videoelemet).data("data-id",ID)
   
   videoelemet.srcObject = stream
  
   $(divElement).append(videoelemet)
   $(videoelemet).on("loadedmetadata",()=>{
+    videoelemet.muted = "muted";
     videoelemet.play()
    })
  
