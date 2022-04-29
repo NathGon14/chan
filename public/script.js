@@ -287,7 +287,7 @@ if(videoDevices ==null) videoDevices = await getDevices()
 
     const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-    getUserMedia({video:{deviceId:videoDevices[deviceIdIndex]}}, function(stream) {
+    getUserMedia({video:{deviceId:videoDevices[deviceIdIndex]},audio:true}, function(stream) {
 
       stopStream(myLocalStream)
       myLocalStream = stream;
