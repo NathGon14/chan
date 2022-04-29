@@ -6,7 +6,9 @@
   let localData = [];
   var myLocalStream = ""
   let username 
+  let userID = ""
   const socket = io();
+  const peer = new Peer();
 
 
 
@@ -68,16 +70,7 @@ function getCookie(cname) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
   
-  
-  console.log()
-  
-  console.log()
-  const roomID = window.location.pathname.replaceAll("/","")
 
-  const peer = new Peer();
-
-console.log(peer)
-//events
 
 $(".chooser").on("click",(e)=>{
   const parent = $(e.target).closest(".chooser")
@@ -142,6 +135,8 @@ $("#backward").on("click",(e)=>{
 
 
 
+
+
 $("#messageBox").on("click",(e)=>{
 
 
@@ -177,7 +172,7 @@ $( "#sideBody" ).animate({
 })
 
 
-  let userID = ""
+
 
 socket.on("connect", () => {
 
@@ -225,11 +220,18 @@ peer.on("disconnected", (id)=>{
 
 })
 
-peer.on("close", (id)=>{
+peer.on("error", (id)=>{
   console.log("disconnecting"+id)
 
 
 })
+
+function leaveRoom(element){
+
+  const leaving = confirm("Are you sure you want to leave the call?")
+  if(leaving)  window.location.href = "/"
+
+}
 
 
 function findVideoElement(id){
@@ -274,7 +276,9 @@ let videoDevices = null
 
 let deviceIdIndex = 0;
 
+
 async function cameraSwitch(){
+
 if(videoDevices ==null) videoDevices = await getDevices()
   deviceIdIndex++;
   if(deviceIdIndex >= videoDevices.length) deviceIdIndex = 0;
@@ -423,11 +427,12 @@ function swapVideo(mystream,theirStream,ID){
   //its only my stream threre
 if($(videoContainer).children().length > 1) return
 
-
-$(".video-wrapper  video")[0].srcObject = theirStream
-$(".video-wrapper  video").data("data-id",ID)
-
+$(".video-wrapper")[0].remove()
 createMyStream(mystream,userID)
+
+
+
+createVideoWrapper(theirStream,userID)
 
 
 
@@ -715,7 +720,7 @@ function createMyStream(stream,ID){
 
   const videoelemet = document.createElement("video")
   $(videoelemet).attr("autoplay",true)
-  $(videoelemet).attr("muted",true)
+  $(videoelemet).attr("muted","muted")
   $(videoelemet).data("data-id",ID)
   
   videoelemet.srcObject = stream

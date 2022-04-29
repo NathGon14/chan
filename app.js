@@ -61,7 +61,7 @@ socketServer.on("connection", (socket) => {
   function findRoom(socket){
     
     const clientSocket  = socket.rooms.values()
-    console.log(clientSocket)
+ 
       clientSocket.next().value
         const clientRoom = clientSocket.next().value
 
