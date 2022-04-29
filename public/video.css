@@ -44,15 +44,16 @@ video {
   padding: 5px !important;
 }
 
-@media (min-width: 320px) {
-  html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #891D1D;
-  }
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #891D1D;
+  overflow: hidden;
+}
 
+@media (min-width: 320px) {
   .main-body {
     width: 100%;
     height: 100%;
@@ -511,18 +512,26 @@ video {
   .room-head div i {
     font-size: 2em;
     margin-right: 10px;
-    margin-top: 10px;
     color: white;
   }
   .room-head div span, .room-head div div {
+    overflow: hidden;
+    word-wrap: break-word;
     font-weight: bold;
     color: white;
     font-family: "Source Sans Pro", sans-serif;
     font-size: 1em;
   }
   .room-head div:nth-child(2) {
-    margin-top: 10px;
-    display: flex !important;
+    padding: 0;
+    justify-content: center;
+    word-wrap: break-word;
+    margin-top: 20px;
+    display: flex;
+    width: 100%;
+  }
+  .room-head div:nth-child(2) i {
+    margin-top: 0px;
   }
 
   .user {

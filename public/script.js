@@ -142,7 +142,7 @@ $("#backward").on("click",(e)=>{
     const text = window.location.href
      
       navigator.clipboard.writeText(text).then(function() {
-        createNotifcation({message:"Link Copied",leave:false})
+        createNotifcation({message:"Link Copied",leave:false,sendChat:false})
       }, function(err) {
     
       });
@@ -266,7 +266,7 @@ function userLeave(id){
  if($(leaverVideo).closest(".video-wrapper")!=null) $(leaverVideo).closest(".video-wrapper")[0].remove()
   
 const leaverName = localData.find((e)=> e["userID"] == id)
- createNotifcation({message:leaverName["name"]+" has left",leave:true})
+ createNotifcation({message:leaverName["name"]+" has left",leave:true,sendChat:true})
  localData = localData.filter((e)=> e["userID"] != id)
   numberOfUser--;
   pickGridLeave()
@@ -374,7 +374,7 @@ const ID = param["userID"]
   numberOfUser++;
   localData.push({name:param["name"],userID:param["userID"]})
   createUsers(param)
-  createNotifcation({message:param["name"]+" has Joined",leave:false})
+  createNotifcation({message:param["name"]+" has Joined",leave:false,sendChat:true})
   caller = peer.call(param["peerId"], myLocalStream,{ metadata: { "ID": userID,"name":username }});
    
      peerConnections.push(caller)
@@ -658,7 +658,8 @@ function pickGridLeave(){
 
 function createNotifcation(message){
 
-createMessage({sender:"Server",message:message["message"],name:"Server"})
+  if(message["sendChat"])createMessage({sender:"Server",message:message["message"],name:"Server"})
+
 
 let div = $("<div style = 'display:none;' class = 'color1'><span></span></div>")
 if(message['leave'])div = $("<div style = 'display:none;' class = 'color2'><span></span></div>")
