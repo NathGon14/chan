@@ -5,6 +5,8 @@ video {
   -moz-transform: rotateY(180deg);
   /* Firefox */
   border: 1px solid black;
+  background-color: black;
+  object-fit: contain !important;
 }
 
 .video-wrapper, .my-video {
@@ -31,6 +33,9 @@ video {
   border-radius: 360px;
 }
 
+.my-video video {
+  object-fit: cover !important;
+}
 .my-video div {
   margin: auto;
 }
@@ -226,7 +231,6 @@ video {
     background-color: black;
     width: 100%;
     height: 100%;
-    object-fit: cover;
   }
   .video-grid-1 > .my-video, .video-grid-5 > .my-video {
     position: absolute;
@@ -242,7 +246,7 @@ video {
     width: 100%;
     height: 100%;
     aspect-ratio: 3/4;
-    object-fit: cover;
+    object-fit: contain;
   }
   .video-grid-1 > div:nth-child(n+3), .video-grid-5 > div:nth-child(n+3) {
     display: none !important;
@@ -472,6 +476,7 @@ video {
     padding-top: 5px;
     padding-left: 10px;
     width: 95%;
+    background-color: white;
     resize: none;
     color: black;
     font-family: "Roboto", sans-serif;

@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js & sass --watch public/video.scss public/video.css",
+    "dev": "nodemon app.js",
+    "css": "sass --watch public/video.scss public/video.css",
     "deploy": "git add . & git commit -m 'adasd' & git push origin & git push heroku main"
   },
   "dependencies": {

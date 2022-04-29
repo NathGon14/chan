@@ -16,6 +16,9 @@ video{
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
     border:1px solid black;
+    background-color: black;
+    object-fit: contain !important;
+   
 }
 .video-wrapper,.my-video{
     position: relative;
@@ -49,6 +52,10 @@ video{
     }
 }
 .my-video{
+    video{
+        object-fit: cover !important;
+    }
+  
     div{
     
         margin:auto;
@@ -328,7 +335,7 @@ transform: translate(0, -50%);
                 background-color: black;
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+              
             }
         }
         > .my-video{
@@ -351,7 +358,7 @@ transform: translate(0, -50%);
                 aspect-ratio: 3/4;
            
                 
-                object-fit: cover;
+                object-fit: contain;
             }
         }
         > div:nth-child(n+3){

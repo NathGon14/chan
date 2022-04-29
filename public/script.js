@@ -386,7 +386,7 @@ getUserMedia({video: {facingMode:"environment"}, audio: true}, function(stream) 
   myLocalStream = stream;
 
   createVideoWrapper(stream,userID)
-  console.log("hehehe")
+
   peer.on('call', function(call) {
     numberOfUser++;
     caller = call
@@ -397,10 +397,11 @@ getUserMedia({video: {facingMode:"environment"}, audio: true}, function(stream) 
   call.on('stream', function(theirStream) {
       if(preventEmit != 0)return  
       const ID = call.metadata.ID
-      
+      //creating userElements
       createUsers({name:call.metadata.name,userID:ID})
+      //pushing their info
       localData.push({name:call.metadata.name,userID:ID})
-      console.log(localData)
+      
       swapVideo(stream,theirStream,ID)
 
       pickGrid(theirStream,ID)
@@ -427,7 +428,7 @@ function swapVideo(mystream,theirStream,ID){
   //its only my stream threre
 if($(videoContainer).children().length > 1) return
 
-$(".video-wrapper")[0].remove()
+$(videoContainer).html("")
 
 createMyStream(mystream,userID)
 
@@ -591,15 +592,6 @@ function manualPickGrid(){
   if(nakapiliba) nakapiliba = false
    
 
-  
-
-
- 
-
-
-
- 
-
 
 }
 
@@ -696,15 +688,17 @@ function createVideoWrapper(stream,ID){
 
 
   const videoelemet = document.createElement("video")
-  $(videoelemet).attr("autoplay",true)
  
-  if(ID != null)  $(videoelemet).data("data-id",ID)
+ $(videoelemet).data("data-id",ID)
+ $(videoelemet).attr("data-id",ID)
 
   videoelemet.srcObject = stream
  
   $(divElement).append(videoelemet)
  $(videoelemet).on("loadedmetadata",()=>{
-    videoelemet.play()
+    
+  videoelemet.play()
+
    })
  
   $(videoContainer).append(divElement)
@@ -720,9 +714,10 @@ function createMyStream(stream,ID){
 
 
   const videoelemet = document.createElement("video")
-  $(videoelemet).attr("autoplay",true)
+
  
   $(videoelemet).data("data-id",ID)
+  $(videoelemet).attr("data-id",ID)
   
   videoelemet.srcObject = stream
  
