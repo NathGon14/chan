@@ -222,11 +222,15 @@ joining(peer,id,socket,null)
 })
 
 
+function findVideoElement(id){
+
+return $("video").toArray().filter((e)=>{ return $(e).data("data-id") == id})[0]
+}
 
 
 function userLeave(id){
 //remove the video of the one who leave
- const leaverVideo = $("video").toArray().filter((e)=>{ return $(e).data("data-id") == id})[0]
+ const leaverVideo = findVideoElement(id)
 
  if($(leaverVideo).closest(".video-wrapper")!=null) $(leaverVideo).closest(".video-wrapper")[0].remove()
   
@@ -284,6 +288,9 @@ if(videoDevices ==null) videoDevices = await getDevices()
        
         sender.replaceTrack(videoTrack);
       });
+       const myVid = findVideoElement(userID)
+      console.log(myVid)
+       myVid.srcObject = stream;
 
  
     }, function(err) {
@@ -698,7 +705,7 @@ function createMyStream(stream,ID){
 
   const videoelemet = document.createElement("video")
   $(videoelemet).attr("autoplay",true)
-  $(videoelemet).attr("mute",true)
+  $(videoelemet).attr("muted",true)
   $(videoelemet).data("data-id",ID)
   
   videoelemet.srcObject = stream
