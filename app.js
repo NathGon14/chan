@@ -5,8 +5,12 @@ const http = require('http');
 const app = express();
 const port = process.env.PORT || 5000;
 const server = http.createServer(app);
+const { v4: uuidv4 }  = require("uuid")
 
- 
+app.set("view-engine", "ejs")
+// app.use(express.urlencoded({ extended: false }))
+// app.use(express.json())
+
  const socketServer = Socket(server, {
   path: '/socket.io'
 });
@@ -93,11 +97,23 @@ res.sendFile(__dirname+"/public/index.html")
 
 })
 
+
+app.get("/room",(req,res)=>{
+  
+  res.sendFile(__dirname+"/views/generator.html")
+
+})
+app.get("/rooms",(req,res)=>{
+
+res.redirect("/room/"+uuidv4())
+
+})
+
+
 app.get("/room/:id",(req,res)=>{
+  const id = req.params.id
+    res.status(200).render(__dirname +"/views/video.ejs",{id})
 
-    res.sendFile(__dirname+"/views/video.html")
-
-    
     })
 
 
