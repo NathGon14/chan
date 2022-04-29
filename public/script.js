@@ -287,7 +287,7 @@ if(videoDevices ==null) videoDevices = await getDevices()
 
     const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 
-    getUserMedia({video:{deviceId:videoDevices[deviceIdIndex]}, audio: true}, function(stream) {
+    getUserMedia({video:{deviceId:videoDevices[deviceIdIndex]}}, function(stream) {
 
       stopStream(myLocalStream)
       myLocalStream = stream;
@@ -323,9 +323,13 @@ function stopStream(stream) {
   if(stream == null)return
   const tracks = stream.getTracks();
 
-  tracks.forEach(function(track) {
-    track.stop();
-  });
+
+  const video = tracks.find((media)=>{
+    return media.kind == "video"
+  })
+  video.stop();
+
+
 
 
 }
