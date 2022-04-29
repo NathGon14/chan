@@ -130,6 +130,25 @@ $("#backward").on("click",(e)=>{
   
   })
 
+
+  $("#backward").on("click",(e)=>{
+    console.log("backward")
+      moveback();
+    
+    })
+    $("#link").text(window.location.href)
+
+    $("#link").on("click",(e)=>{
+    const text = window.location.href
+     
+      navigator.clipboard.writeText(text).then(function() {
+        createNotifcation({message:"Link Copied",leave:false})
+      }, function(err) {
+    
+      });
+
+    })
+
  
 
 

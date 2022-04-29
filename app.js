@@ -111,8 +111,9 @@ res.redirect("/room/"+uuidv4())
 
 
 app.get("/room/:id",(req,res)=>{
-  const id = req.params.id
-    res.status(200).render(__dirname +"/views/video.ejs",{id})
+
+  console.log(req)
+    res.status(200).render(__dirname +"/views/video.ejs")
 
     })
 

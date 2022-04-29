@@ -514,12 +514,15 @@ video {
     margin-top: 10px;
     color: white;
   }
-  .room-head div span {
-    overflow: hidden;
+  .room-head div span, .room-head div div {
     font-weight: bold;
     color: white;
     font-family: "Source Sans Pro", sans-serif;
     font-size: 1em;
+  }
+  .room-head div:nth-child(2) {
+    margin-top: 10px;
+    display: flex !important;
   }
 
   .user {

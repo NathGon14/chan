@@ -737,11 +737,18 @@ transform: translate(0, -50%);
                 margin-top: 10px;
                 color: white;
             }
-            span{
-                overflow: hidden;
+            span,div{
+
+               
                 font-weight: bold;
                     @include fontSettings1(white,$priority2 , 1em)
             }
+
+            
+        }
+         div:nth-child(2){
+             margin-top: 10px;
+            display: flex !important;
         }
 
     }
