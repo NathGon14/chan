@@ -69,16 +69,14 @@ function getCookie(cname) {
   }
   
   
+  console.log()
   
-  
+  console.log()
+  const roomID = window.location.pathname.replaceAll("/","")
 
-  const peer = new Peer( {
-    path: "/myapp",
-    host: "/",
-    port: "3030"
-  });
+  const peer = new Peer();
 
-
+console.log(peer)
 //events
 
 $(".chooser").on("click",(e)=>{
@@ -221,6 +219,18 @@ joining(peer,id,socket,null)
 
 })
 
+peer.on("disconnected", (id)=>{
+  console.log("disconnecting"+id)
+
+
+})
+
+peer.on("close", (id)=>{
+  console.log("disconnecting"+id)
+
+
+})
+
 
 function findVideoElement(id){
 
@@ -278,7 +288,7 @@ if(videoDevices ==null) videoDevices = await getDevices()
       stopStream(myLocalStream)
       myLocalStream = stream;
       const peerConnection = peerConnections.map(e=>{return e.peerConnection})
-      console.log(peerConnection);
+
  
       let videoTrack = stream.getVideoTracks()[0];
         peerConnection.forEach(function(pc) {
@@ -289,7 +299,7 @@ if(videoDevices ==null) videoDevices = await getDevices()
         sender.replaceTrack(videoTrack);
       });
        const myVid = findVideoElement(userID)
-      console.log(myVid)
+
        myVid.srcObject = stream;
 
  

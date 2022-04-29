@@ -1,6 +1,5 @@
 
 const express = require("express")
-const { ExpressPeerServer } = require('peer');
 const Socket  = require("socket.io");
 const http = require('http');
 const app = express();
@@ -12,57 +11,57 @@ const server = http.createServer(app);
   path: '/socket.io'
 });
 
-const { PeerServer } = require('peer');
-
-const peerServer = PeerServer({port:"3030", path: '/myapp' });
-
-// serverpeer.listen(9000)
-
-peerServer.on("connection",(client)=>{
-  console.log(client);
-})
-
-
-
-
 
 
 socketServer.on("connection", (socket) => {
  
     socket.on("joining",(param)=>{
-    
+
+
         socket.join(getRoom(socket))
-        socket.to(getRoom(socket)).emit("peerId",param)
+        socket.to(findRoom(socket)).emit("peerId",param)
+
+     
    
     })
 
     socket.on("sendMessage",(messagePackage)=>{
     
 
-      socket.to(getRoom(socket)).emit("createMessage",messagePackage)
+      socket.to(findRoom(socket)).emit("createMessage",messagePackage)
  
   })
   socket.on("sendToggle",(toggleOptions)=>{
   
-    socket.to(getRoom(socket)).emit("toggle",toggleOptions)
+    socket.to(findRoom(socket)).emit("toggle",toggleOptions)
 
 })
 
   socket.on("disconnecting", (reason) => {
 
-  socket.to(getRoom(socket)).emit("leave",socket.id)
+  socket.to(findRoom(socket)).emit("leave",socket.id)
 
 
 
   });
   });
-
-  
 
   
   function getRoom(socket){
 
+    const url = (new URL(socket.handshake.headers.referer)).pathname;
+
+    
+
+    return url;
+
+  }
+
+  
+  function findRoom(socket){
+    
     const clientSocket  = socket.rooms.values()
+    console.log(clientSocket)
       clientSocket.next().value
         const clientRoom = clientSocket.next().value
 
