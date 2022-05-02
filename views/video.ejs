@@ -31,8 +31,8 @@
             <div class = "options">
                  <div class="option-container">
                     <div><i onclick = "cameraSwitch(this)"class="fa-solid fa-camera-rotate"></i></div>
-                    <div><i  onclick = "turnOffCamera(this)" class="fa-solid fa-video"></i></div>
-                    <div><i onclick = "turnOffMic(this)"class="fa-solid fa-microphone"></i></div>
+                    <div><i  id ='videoButton' onclick = "turnOffCamera(this,true)" class="fa-solid fa-video"></i></div>
+                    <div><i  id ='audioButton' onclick = "turnOffMic(this,true)"class="fa-solid fa-microphone"></i></div>
                     <div><i onclick = "leaveRoom(this)" class="fa-solid fa-right-from-bracket"></i></div>
                  </div>
             </div>
@@ -43,7 +43,7 @@
           <!--aboslute-->
      
         <div class = "video-conatiner">
-        <div id = "videoContainer" class = "video-grid-1"></div>
+        <div id = "videoContainer" class = "video-grid-5"></div>
 
         <div class = "changer">
             <div><i id ="backward" class="fa-solid fa-angle-left"></i></div>

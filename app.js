@@ -19,27 +19,23 @@ app.set("view-engine", "ejs")
 
 socketServer.on("connection", (socket) => {
  
+ 
     socket.on("joining",(param)=>{
-
-
         socket.join(getRoom(socket))
         socket.to(findRoom(socket)).emit("peerId",param)
 
-     
-   
     })
 
     socket.on("sendMessage",(messagePackage)=>{
     
-
       socket.to(findRoom(socket)).emit("createMessage",messagePackage)
  
-  })
+     })
   socket.on("sendToggle",(toggleOptions)=>{
   
     socket.to(findRoom(socket)).emit("toggle",toggleOptions)
 
-})
+        })
 
   socket.on("disconnecting", (reason) => {
 
@@ -112,7 +108,7 @@ res.redirect("/room/"+uuidv4())
 
 app.get("/room/:id",(req,res)=>{
 
-  console.log(req)
+
     res.status(200).render(__dirname +"/views/video.ejs")
 
     })

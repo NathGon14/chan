@@ -11,13 +11,14 @@ $foregroundColor:white;
 $priority1: 'Roboto', sans-serif;
 $priority2: 'Source Sans Pro', sans-serif;
 $priority3:'Kanit', sans-serif;
+$objectFit: contain;
 video{
     transform: rotateY(180deg);
     -webkit-transform:rotateY(180deg); /* Safari and Chrome */
     -moz-transform:rotateY(180deg); /* Firefox */
-    border:1px solid black;
+   
     background-color: black;
-    object-fit: contain !important;
+
    
 }
 .video-wrapper,.my-video{
@@ -53,7 +54,7 @@ video{
 }
 .my-video{
     video{
-        object-fit: cover !important;
+     
     }
   
     div{
@@ -82,7 +83,7 @@ video{
     margin: 0;
     padding: 0;
     background-color: #891D1D;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 
@@ -142,7 +143,7 @@ video{
         left:20px;
         div{
             position: relative;
-            background-color: rgba(255, 255, 255, 0.13);
+            background-color: rgba(0, 0, 0, 0.274);
             margin-top: 20px;
             border-radius: 360px;
             padding: 10px;
@@ -336,6 +337,7 @@ transform: translate(0, -50%);
                 background-color: black;
                 width: 100%;
                 height: 100%;
+                object-fit: contain;
               
             }
         }
@@ -359,7 +361,7 @@ transform: translate(0, -50%);
                 aspect-ratio: 3/4;
            
                 
-                object-fit: contain;
+                object-fit: cover;
             }
         }
         > div:nth-child(n+3){
@@ -384,7 +386,7 @@ transform: translate(0, -50%);
               
            
                 
-                object-fit: cover;
+                object-fit: $objectFit;
             }
         }
 
@@ -409,7 +411,7 @@ transform: translate(0, -50%);
               > video{
                   width: 100%;
                   height: 100%;
-                  object-fit: cover;
+                  object-fit: $objectFit;
 
               }
               
@@ -436,7 +438,7 @@ transform: translate(0, -50%);
           > video{
               width: 100%;
               height: 100%;
-              object-fit: cover;
+              object-fit: $objectFit;
 
           }
    
@@ -453,7 +455,6 @@ transform: translate(0, -50%);
 
 
 }
-
 
 
     
@@ -474,7 +475,7 @@ transform: translate(0, -50%);
                 > video{
                     width: 100%;
                     height: 100%;
-                    object-fit: cover;
+                    object-fit: $objectFit;
 
                  
                 }

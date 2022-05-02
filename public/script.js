@@ -13,6 +13,7 @@
 
 
 
+
 checkCookie()
 
 
@@ -131,11 +132,7 @@ $("#backward").on("click",(e)=>{
   })
 
 
-  $("#backward").on("click",(e)=>{
-    console.log("backward")
-      moveback();
-    
-    })
+
     $("#link").text(window.location.href)
 
     $("#link").on("click",(e)=>{
@@ -222,13 +219,21 @@ socket.on("leave",(theirID)=>{
 
 
 
-peer.on("open", (id)=>{
+peer.on("open", async (id)=>{
+  //ask for permission
+  try {
+    await navigator.mediaDevices.getUserMedia({video: {facingMode:"environment"}, audio: true})
+  } catch (error) {
+    
+  }
+
   localData = [];
 
   localData.push({name:username,userID:userID})
-  createUsers({name:username,userID:userID})
+  createUsers({name:username,userID:userID})  
 
-joining(peer,id,socket,null)
+
+joining(id)
 
 
 })
@@ -269,17 +274,15 @@ const leaverName = localData.find((e)=> e["userID"] == id)
  createNotifcation({message:leaverName["name"]+" has left",leave:true,sendChat:true})
  localData = localData.filter((e)=> e["userID"] != id)
   numberOfUser--;
-  pickGridLeave()
+  pickGrid()
 
   removeUsers(id)
 }
 let call;
 let peerConnections = [];
 let videoDevices = null
-
+let fakeStream = false;
 // on open will be launch when you successfully connect to PeerServer
-
-
  async function getDevices() {
   const devices =  await navigator.mediaDevices.enumerateDevices();
     let deviceVid = devices.filter(e=>{
@@ -295,63 +298,212 @@ let videoDevices = null
 
 let deviceIdIndex = 0;
 
+// toggle settings
+
+function toggleVideoSettings(what,ID){
+  const video = $("video").toArray().filter((e)=>{ return $(e).data("data-id") == ID})[0]
+  let icon = $(video).parent().find("div i:nth-child(1)")
+  if(what =="camera") icon= $(video).parent().find("div i:nth-child(2)")
+
+  $(icon).toggle()
+ 
+}
+function onceToggle(what,ID){
+  const video = $("video").toArray().filter((e)=>{ return $(e).data("data-id") == ID})[0]
+  let icon = $(video).parent().find("div i:nth-child(1)")
+  if(what =="camera") icon= $(video).parent().find("div i:nth-child(2)")
+
+  $(icon).show()
+ 
+}
+let cameraOn = true;
+let micOn = true
+
+function turnOffCamera(element,emit){
+
+  if(myLocalStream == null || myLocalStream =="" ) return
+
+  if(myLocalStream.getVideoTracks()[0] === undefined || fakeStream){
+    $(element).addClass("fa-solid fa-video-slash")
+    onceToggle("camera",userID)
+    cameraOn =false
+    return
+  }
+  toggleVideoSettings("camera",userID)
+  if(emit) socket.emit("sendToggle",{what:"camera",ID:userID})
+
+
+  $(element).removeClass()
+
+  if(myLocalStream.getVideoTracks()[0].enabled){
+  myLocalStream.getVideoTracks()[0].enabled = false
+  $(element).addClass("fa-solid fa-video-slash")
+  cameraOn =false
+  
+    return
+  }
+  $(element).addClass("fa-solid fa-video")
+  myLocalStream.getVideoTracks()[0].enabled = true
+  cameraOn =true
+
+
+}
+
+
+function resetCamAndMicState(){
+
+  if(!cameraOn) myLocalStream.getVideoTracks()[0].enabled = false
+
+  
+
+  if(!micOn)  myLocalStream.getAudioTracks()[0].enabled = false
+
+
+
+
+}
+
+function turnOffMic(element,emit){
+  if(myLocalStream == null || myLocalStream =="" ) return
+
+  if(myLocalStream.getAudioTracks()[0] === undefined || fakeStream){
+    $(element).addClass("fa-solid fa-microphone-slash")
+    onceToggle("mic",userID)
+    micOn = false;
+    return
+  }
+    
+  
+  toggleVideoSettings("mic",userID)
+  if(emit)  socket.emit("sendToggle",{what:"mic",ID:userID})
+
+ 
+
+  $(element).removeClass()
+  if(myLocalStream.getAudioTracks()[0].enabled){
+  myLocalStream.getAudioTracks()[0].enabled = false
+  $(element).addClass("fa-solid fa-microphone-slash")
+  micOn = false;
+
+    return
+  }
+
+  $(element).addClass("fa-solid fa-microphone")
+  myLocalStream.getAudioTracks()[0].enabled = true
+  micOn = true;
+
+}
+
+function createDisconnectListner(pc){
+
+  pc.oniceconnectionstatechange = function() {
+    if(pc.iceConnectionState == 'disconnected') {
+        console.log('Disconnected');
+    }
+}
+console.log(pc.oniceconnectionstatechange)
+}
+let performedSearch = false;
 
 async function cameraSwitch(){
+  if(myLocalStream == null || myLocalStream =="" ) return
+  
 
-if(videoDevices ==null) videoDevices = await getDevices()
+  if(videoDevices ==null && !performedSearch){
+    videoDevices = await getDevices()
+    performedSearch=true;
+  } 
+  //if search and still noting there no devices return
+  if(videoDevices == null || videoDevices == "")return;
   deviceIdIndex++;
   if(deviceIdIndex >= videoDevices.length) deviceIdIndex = 0;
+  // same as video Stream
 
-  if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
+  const deviceIdNow = myLocalStream.getVideoTracks()[0].getCapabilities().deviceId
+  console.log(deviceIdNow == videoDevices[deviceIdIndex] && videoDevices.length > 1);
 
-    const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-    getUserMedia({video:{deviceId:videoDevices[deviceIdIndex]},audio:true}, function(stream) {
-
-      stopStream(myLocalStream)
-      myLocalStream = stream;
-      const peerConnection = peerConnections.map(e=>{return e.peerConnection})
-
- 
-      let videoTrack = stream.getVideoTracks()[0];
-        peerConnection.forEach(function(pc) {
-        var sender = pc.getSenders().find(function(s) {
-          return s.track.kind == videoTrack.kind;
-        });
-       
-        sender.replaceTrack(videoTrack);
-      });
-       const myVid = findVideoElement(userID)
-
-       myVid.srcObject = stream;
-
- 
-    }, function(err) {
-      console.log(err)
-    })
+  if(deviceIdNow == videoDevices[deviceIdIndex] && videoDevices.length > 1) {
+    cameraSwitch()
+    return
   }
+
+console.log("loop");
+
+  const permissions =  await findPermission()
+  const videoConstraint = permissions["camera"] === "granted" ? {deviceId:videoDevices[deviceIdIndex]}: false
+  const constrain  = {
+    video:videoConstraint
+  }
+  //return
+  if(!videoConstraint){
+    alert("Camera permission is denied, please accept the permission")
+    return;
+  }
+
+
+
+    try {
+     const stream =  await navigator.mediaDevices.getUserMedia(constrain)   
+     const peerConnection = peerConnections.map(e=>{return e.peerConnection})
+     let videoTrack = stream.getVideoTracks()[0];
+
+     replaceStream(myLocalStream,videoTrack)
+       peerConnection.forEach(function(pc) {
+       var sender = pc.getSenders().find(function(s) {
+         return s.track.kind == videoTrack.kind;
+       });
+      
+       sender.replaceTrack(videoTrack);
+     });
+      
+ 
+     resetCamAndMicState()
+
+
+  } catch (error) {
+
+    console.log(error)
+
+  }
+
+
   
  
 
 
 
 }
-function stopStream(stream) {
+function replaceStream(localStream,vidTrack) {
 
+  if(localStream == null)return
+  const tracks = localStream.getVideoTracks();
+  tracks.forEach((tracks)=>{
+    myLocalStream.removeTrack(tracks);
+    tracks.stop()
+  })
+
+  myLocalStream.addTrack(vidTrack)
+  const myVid = findVideoElement(userID)
+
+      myVid.srcObject = myLocalStream;
+  
+     
+
+}
+
+function addTrack(localStream) {
 
   if(stream == null)return
   const tracks = stream.getTracks();
-
-
   const video = tracks.find((media)=>{
     return media.kind == "video"
   })
   video.stop();
 
 
-
-
 }
+
+
 function stopStreamedVideo(videoElem) {
 
   const stream = videoElem.srcObject;
@@ -367,30 +519,32 @@ function stopStreamedVideo(videoElem) {
 
 
 // first joingin
-socket.on("peerId",(param)=>{
-const ID = param["userID"]
- connection = peer.connect(param["peerId"]);
+socket.on("peerId",async(param)=>{
 
-  numberOfUser++;
-  localData.push({name:param["name"],userID:param["userID"]})
-  createUsers(param)
-  createNotifcation({message:param["name"]+" has Joined",leave:false,sendChat:true})
-  caller = peer.call(param["peerId"], myLocalStream,{ metadata: { "ID": userID,"name":username }});
-   
-     peerConnections.push(caller)
-  
+
+const permissions = await findPermission()
+
+
+const ID = param["userID"]
+peer.connect(param["peerId"]);
+numberOfUser++;
+localData.push({name:param["name"],userID:param["userID"]})
+createUsers(param)
+createNotifcation({message:param["name"]+" has Joined",leave:false,sendChat:true}) 
+caller = peer.call(param["peerId"], myLocalStream,{ metadata: 
+  { "ID": userID,"name":username,permissions:permissions}});
+peerConnections.push(caller)  
+createDisconnectListner(caller)
+
   let preventEmit = 0;
   caller.on('stream', function(theirStream) {
-    // perform swap if your the only two 
-    //two emit preventor
        if(preventEmit != 0)return
 
-   swapVideo(myLocalStream,theirStream,ID)
+       createVideoWrapper(theirStream,ID)
+       autoToggle(param["permissions"],ID)
+       pickGrid()
 
-      pickGrid(theirStream,ID)
-      console.log(localData)
-
-          preventEmit++
+       preventEmit++
  
    });
  
@@ -398,76 +552,149 @@ const ID = param["userID"]
 
 })
 
+const  findPermission = async ()=>{
+
+ const mic = navigator.permissions.query({name: 'microphone'})
+  .then((permissionObj) => {
+    return permissionObj.state
+  })
+  .catch((error) => {
+   console.log('Got error :', error);
+  })
+ 
+ const cam =  navigator.permissions.query({name: 'camera'})
+  .then((permissionObj) => {
+    return permissionObj.state
+  })
+  .catch((error) => {
+   console.log('Got error :', error);
+  })
+
+
+  return {camera:await cam,microphone:await mic}
+
+
+}
 
 
 
-async function joining(peer,peerID,socket){
+const createCall =  (stream,permissions)=>{
 
-const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-getUserMedia({video: {facingMode:"environment"}, audio: true}, function(stream) {
-  myLocalStream = stream;
-
-  createVideoWrapper(stream,userID)
-
-  peer.on('call', function(call) {
-    numberOfUser++;
-    caller = call
-    peerConnections.push(caller)
-
-  call.answer(stream); 
-  let preventEmit = 0;
-  call.on('stream', function(theirStream) {
-      if(preventEmit != 0)return  
-      const ID = call.metadata.ID
-      //creating userElements
-      createUsers({name:call.metadata.name,userID:ID})
-      //pushing their info
-      localData.push({name:call.metadata.name,userID:ID})
-      
-      swapVideo(stream,theirStream,ID)
-
-      pickGrid(theirStream,ID)
-
-       preventEmit++
+      myLocalStream = stream;
     
 
-  });
+     createMyStream(stream,userID)
+     autoToggle(permissions)
+     peer.on('call', function(call) {
+       numberOfUser++;
+       caller = call
+       peerConnections.push(caller)
+       createDisconnectListner(caller)
+     call.answer(stream); 
+     let preventEmit = 0;
+     call.on('stream', function(theirStream) {
+         if(preventEmit != 0)return  
+         const ID = call.metadata.ID
+         //creating userElements
+         createUsers({name:call.metadata.name,userID:ID})
+         //pushing their info
+         localData.push({name:call.metadata.name,userID:ID})
+         
+         createVideoWrapper(theirStream,ID)
+         autoToggle(call.metadata.permissions,ID)
+         
+         pickGrid()
+   
+   
+          preventEmit++
+       
+   
+     });
+     
+     
+     });
+
+   
+
+
+}
+function autoToggle(permission,id) {
   
+  if(id != null){
+
+    if(permission["camera"] != "granted")toggleVideoSettings("camera",id)
+
+    if(permission["microphone"] != "granted")toggleVideoSettings("mic",id)
+
+    return
+  }
+
+
+  if(permission["camera"] != "granted") turnOffCamera($("#videoButton")[0],false)
+
+  if(permission["microphone"] != "granted") turnOffMic($("#audioButton")[0],false)
+
   
-  });
-  socket.emit("joining",{peerId:peerID,name:username,userID:userID})
+}
 
-}, function(err) {
+async function joining(peerID){
 
 
-  console.log('permisionNotu' ,err);
-});
+ const permissions =  await findPermission()
+ const videoConstraint = permissions["camera"] === "granted" ? {facingMode :"environment"}: false
+ const audioConstraint = permissions["microphone"] === "granted" ? true : false
+ const constrain  = {
+   video:videoConstraint,
+   audio:audioConstraint
+ }
+
+
+let  stream
+  try {
+
+    (!videoConstraint && !audioConstraint)  ?
+    stream = new MediaStream([createEmptyAudioTrack(), createEmptyVideoTrack({ width:640, height:480 })])  : stream =  await navigator.mediaDevices.getUserMedia(constrain)   
+     createCall(stream,permissions)
+
+     socket.emit("joining",{peerId:peerID,name:username,userID:userID,permissions:permissions})
+  
+    } catch (error) {
+   
+      console.log(error)
+
+      
+  
+  }
+
+
+
 
 
 }
 
-function swapVideo(mystream,theirStream,ID){
-  //its only my stream threre
-if($(videoContainer).children().length > 1) return
-
-$(videoContainer).html("")
-
-createMyStream(mystream,userID)
-
-
-
-createVideoWrapper(theirStream,ID)
-
-
-
-
+//creating if they dont have audio
+const createEmptyAudioTrack = () => {
+  fakeStream =true
+  const ctx = new AudioContext();
+  const oscillator = ctx.createOscillator();
+  const dst = oscillator.connect(ctx.createMediaStreamDestination());
+  oscillator.start();
+  const track = dst.stream.getAudioTracks()[0];
+  return Object.assign(track, { enabled: true });
 }
+
+const createEmptyVideoTrack = ({ width, height }) => {
+  const canvas = Object.assign(document.createElement('canvas'), { width, height });
+  canvas.getContext('2d').fillRect(0, 0, width, height);
+
+  const stream = canvas.captureStream();
+  const track = stream.getVideoTracks()[0];
+
+  return Object.assign(track, { enabled: true });
+};
 
 
 // carousel script
-
-
 
 function moveforward(){
 let limit = numberOfGrid;
@@ -476,14 +703,12 @@ if(numberOfGrid == 5){
   limit = 1;
 }
 
-
   //append the first child to last
   for(let i = 0; i< limit; i++){
     let firstChild = $(videoContainer).children().first()
     if(limit == 1 && numberOfGrid != 5 && numberOfUser >= 2)firstChild = $(videoContainer).children()[1]
-
-    
     $(videoContainer).append(firstChild);
+
 
   }
 
@@ -504,106 +729,76 @@ function moveback(){
 
 }
 
-// toggle settings
-
-function toggleVideoSettings(what,ID){
-  const video = $("video").toArray().filter((e)=>{ return $(e).data("data-id") == ID})[0]
-  let icon = $(video).parent().find("div i:nth-child(1)")
-  if(what =="camera") icon= $(video).parent().find("div i:nth-child(2)")
-
-  $(icon).toggle()
- 
-}
-
-function turnOffCamera(element){
 
 
-  if(myLocalStream == null || myLocalStream =="" ) return
-  toggleVideoSettings("camera",userID)
-  socket.emit("sendToggle",{what:"camera",ID:userID})
 
-  $(element).removeClass()
-
-  if(myLocalStream.getVideoTracks()[0].enabled){
-  myLocalStream.getVideoTracks()[0].enabled = false
-  $(element).addClass("fa-solid fa-video-slash")
-  
-    return
-  }
-  $(element).addClass("fa-solid fa-video")
-  myLocalStream.getVideoTracks()[0].enabled = true
+let numberOfGrid = 5;
+let nakapiliba= false
 
 
-}
+function pickGrid(){
 
-function turnOffMic(element){
-  if(myLocalStream == null || myLocalStream =="" ) return
-  
-  toggleVideoSettings("mic",userID)
-  socket.emit("sendToggle",{what:"mic",ID:userID})
+  switch(numberOfUser){
+         
+    case 1:
+      addClassGrid("video-grid-5",5)
+    break
+    case 2:
+      addClassGrid("video-grid-1",1)
+    break
 
-  $(element).removeClass()
-  if(myLocalStream.getAudioTracks()[0].enabled){
-  myLocalStream.getAudioTracks()[0].enabled = false
-  $(element).addClass("fa-solid fa-microphone-slash")
+    case 3:
+      addClassGrid("video-grid-3",3)
 
-    return
-  }
+    break;
 
-  $(element).addClass("fa-solid fa-microphone")
-  myLocalStream.getAudioTracks()[0].enabled = true
+    default:
+      addClassGrid("video-grid-4",4)
+
+    break;
+
+   } 
+
 
 }
-
-
-
-let numberOfGrid = 1;
-
-
-function hideOtherGrid(className){
+function addClassGrid(className , gridNumber){
 
   $(videoContainer).removeClass()
   $(videoContainer).addClass(className)
-
-
+  numberOfGrid = gridNumber;
+  
 }
-let nakapiliba= false
+
 
 function manualPickGrid(){
-  $(".my-video").show();
- 
+
   numberOfGrid++;
-  if(numberOfGrid == 1){
-   console.log("grid 1")
-    hideOtherGrid("video-grid-1")
+  if(numberOfGrid == 1  && numberOfUser >=2){
+    addClassGrid("video-grid-1" , numberOfGrid)
     $(videoContainer).prepend($(".my-video"));
     nakapiliba = true;
    
   }
   if(numberOfGrid == 2 && numberOfUser >=2){
-    console.log("grid 2")
-    hideOtherGrid("video-grid-2")
+    addClassGrid("video-grid-2" , numberOfGrid)
     nakapiliba = true;
   
   }
 
   if(numberOfGrid == 3 && numberOfUser >= 3){
-    console.log("grid 3")
-    hideOtherGrid("video-grid-3")
+    addClassGrid("video-grid-3" , numberOfGrid)
     nakapiliba = true;
     
 
   }
   if(numberOfGrid == 4 && numberOfUser >= 4){
-    console.log("grid 4")
-    hideOtherGrid("video-grid-4")
+    addClassGrid("video-grid-4" , numberOfGrid)
     nakapiliba = true;
   
 
   }
   if(numberOfGrid == 5){
-    console.log("grid 5")
-    hideOtherGrid("video-grid-5")
+    addClassGrid("video-grid-5" , numberOfGrid)
     nakapiliba = true;
   
 
@@ -618,43 +813,7 @@ function manualPickGrid(){
 
 }
 
-function pickGridLeave(){
 
-  switch(numberOfUser){
-         
-    case 1:
-      $(videoContainer).removeClass()
-      $(videoContainer).addClass("video-grid-1")
-      $(videoContainer).children().first().removeClass().addClass("video-wrapper")
-      numberOfGrid = 1;
-
-    break
-    case 2:
-      $(videoContainer).removeClass()
-      $(videoContainer).addClass("video-grid-1")
-      numberOfGrid = 2;
-    break
-
-    case 3:
-    $(videoContainer).removeClass()
-    $(videoContainer).addClass("video-grid-3")
-    numberOfGrid = 3;
-
-
-    break;
-
-    default:
-    $(videoContainer).removeClass()
-    $(videoContainer).addClass("video-grid-4")
-    numberOfGrid = 4;
-    
-    break;
-
-
-   } 
-
-
-}
 
 function createNotifcation(message){
 
@@ -673,35 +832,6 @@ setTimeout(()=>$(this).remove(),2000)
 
 }
 
-
-
-function pickGrid(theirStream,ID){
-  if(numberOfUser == 2) return
-  if(ID != null)    createVideoWrapper(theirStream,ID)
-
-     switch(numberOfUser){
-
-      case 3:
-      $(videoContainer).removeClass()
-      $(videoContainer).addClass("video-grid-3")
-      numberOfGrid = 3;
-
-
-      break;
-
-      default: 
-      $(videoContainer).removeClass()
-      $(videoContainer).addClass("video-grid-1")
-      numberOfGrid = 4;
-      
-      break;
-
-
-     } 
-
-
-}
-
 function createVideoWrapper(stream,ID){
   const divElement = document.createElement("div")
   const anotherDiv = "<div><div><i class='fa-solid fa-microphone-slash'></i><i class='fa-solid fa-video-slash'></i></div></div>"
@@ -715,6 +845,9 @@ function createVideoWrapper(stream,ID){
  
  $(videoelemet).data("data-id",ID)
  $(videoelemet).attr("data-id",ID)
+ $(videoelemet).attr('webkit-playsinline', '');
+ $(videoelemet).attr('playsinline', '');
+
 
   videoelemet.srcObject = stream
  
@@ -742,6 +875,9 @@ function createMyStream(stream,ID){
  
   $(videoelemet).data("data-id",ID)
   $(videoelemet).attr("data-id",ID)
+  $(videoelemet).attr('webkit-playsinline', '');
+  $(videoelemet).attr('playsinline', '');
+
   
   videoelemet.srcObject = stream
  
