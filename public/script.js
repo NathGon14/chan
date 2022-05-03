@@ -860,8 +860,8 @@ function createMyStream(stream,ID){
  
   $(videoelemet).data("data-id",ID)
   $(videoelemet).attr("data-id",ID)
-  $(videoelemet).attr('webkit-playsinline', '');
-  $(videoelemet).attr('playsinline', '');
+  $(videoelemet).attr('webkit-playsinline', 'true');
+  $(videoelemet).attr('playsinline', 'true');
 
   
   videoelemet.srcObject = stream
