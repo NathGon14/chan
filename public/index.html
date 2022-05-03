@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="splide.min.css">
 
     <script src="https://kit.fontawesome.com/673ffe1803.js" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 
 
@@ -221,12 +221,12 @@ let recentlyOpened = false;
 <div class = 'container-block-holder'>
     <div class = "first-block">
         <div class = "first-content">
-          <img class = "muscle" src= "img/muscle.png"/>
-        <div class ="first-text"><h1>Your Own</h1>
+          <img  data-aos="fade-down" data-aos-delay="500" data-aos-duration="1500" class = "muscle" src= "img/muscle.png"/>
+        <div class ="first-text"><h1 data-aos-duration="1100" data-aos="fade-right">Your Own</h1>
             
         </div>
-        <div class ="second-text"><h2>Personal Trainer</h2></div>
-        <div class ="third-text">
+        <div class ="second-text"><h2  data-aos-duration="1200" data-aos="fade-left">Personal Trainer</h2></div>
+        <div  data-aos="flip-right"     data-aos-duration="1500" class ="third-text">
             <div><h1>Christian</h1></div>
 
             <div><h1>Lugar</h1></div>
@@ -259,7 +259,7 @@ let recentlyOpened = false;
 
 
             </div>
-            <Div id="about" class="simple-box" >
+            <Div data-aos="fade-up-left" data-aos-duration="1500" id="about" class="simple-box" >
         
             <p id = "text">Resistance training provides several health benefits related to enhancing muscle strength, reversing muscle loss, reducing body fat, improving cardiovascular health, enhancing mental health and increasing bone mineral density.</p>
 
@@ -295,10 +295,10 @@ let recentlyOpened = false;
 
 <div class="about-me-flex">
     <div class="photo-holder">
-        <img class = "photo" src = "img/vertical.jpg"/>
+        <img data-aos="fade-up"   data-aos-duration="1300" class = "photo" src = "img/vertical.jpg"/>
 
     </div>
-    <div class="desc-holder">
+    <div data-aos="fade-down"   data-aos-duration="1300" class="desc-holder">
         <div>
         <h1>COACH CHAN</h1>
         <p> I am a certified personal trainer from American Council on exercise. I have completed courses from the American Council on exercise on nutrition specialist program , and Practicing Equity , Diversity and Inclusion as a Personal Trainer. I participated in two competitions of Powerlifting association of the Philippines last 2021 , I am a bronze medalist. I am also a former anytime fitness coach in paseo and eton tower for 1 ½ year.</p>  
@@ -321,8 +321,8 @@ let recentlyOpened = false;
 
         </div>
 
-    <div class = "product-container">   
-      <div class ="product"> 
+    <div  class = "product-container">   
+      <div data-aos="zoom-in"  data-aos-delay="500"  class ="product"> 
       <img src = "img/online.jpg"/>
       <h2>Online Personal Training</h2>
       <hr class = "hr1">
@@ -343,7 +343,7 @@ let recentlyOpened = false;
       </div>
 
       </div>
-      <div class ="product"> 
+      <div data-aos="zoom-in" data-aos-delay="800" class ="product"> 
         <img src = "img/face.jpg"/>
         <h2>Face-to-Face Personal Training</h2>
         <hr class = "hr1">
@@ -364,7 +364,7 @@ let recentlyOpened = false;
         </div>
   
         </div>
-        <div class ="product"> 
+        <div  data-aos="zoom-in" data-aos-delay="1000" class ="product"> 
           <img src = "img/power.jpg"/>
           <h2>Basic powerlifting Program</h2>
           <hr class = "hr1">
@@ -467,6 +467,9 @@ let recentlyOpened = false;
 </div>
       
 
-    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+  AOS.init();
+</script>
 </body>
 </html>
