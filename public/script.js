@@ -216,15 +216,26 @@ socket.on("leave",(theirID)=>{
   })
 
  
+  peer.on('connection', conn => {
+    console.log("connect")
+    conn.on('close', () => {
+        console.log("Close PeerConnection");
+        //conn.close();
+    });
+})
 
 
-
+let Permmited 
 peer.on("open", async (id)=>{
   //ask for permission
+
   try {
-    await navigator.mediaDevices.getUserMedia({video: {facingMode:"environment"}, audio: true})
+   
+   await navigator.mediaDevices.getUserMedia({video: {facingMode:"environment"}, audio: true})
+   Permmited = true
   } catch (error) {
-    
+    console.log(error)
+    Permmited = false
   }
 
   localData = [];
@@ -233,7 +244,7 @@ peer.on("open", async (id)=>{
   createUsers({name:username,userID:userID})  
 
 
-joining(id)
+joining(id,Permmited)
 
 
 })
@@ -261,6 +272,9 @@ function leaveRoom(element){
 function findVideoElement(id){
 
 return $("video").toArray().filter((e)=>{ return $(e).data("data-id") == id})[0]
+
+
+
 }
 
 
@@ -394,15 +408,7 @@ function turnOffMic(element,emit){
 
 }
 
-function createDisconnectListner(pc){
 
-  pc.oniceconnectionstatechange = function() {
-    if(pc.iceConnectionState == 'disconnected') {
-        console.log('Disconnected');
-    }
-}
-console.log(pc.oniceconnectionstatechange)
-}
 let performedSearch = false;
 
 async function cameraSwitch(){
@@ -419,7 +425,8 @@ async function cameraSwitch(){
   if(deviceIdIndex >= videoDevices.length) deviceIdIndex = 0;
   // same as video Stream
 
-  const deviceIdNow = myLocalStream.getVideoTracks()[0].getCapabilities().deviceId
+
+  const deviceIdNow = myLocalStream.getVideoTracks()[0].getSettings().deviceId
   console.log(deviceIdNow == videoDevices[deviceIdIndex] && videoDevices.length > 1);
 
   if(deviceIdNow == videoDevices[deviceIdIndex] && videoDevices.length > 1) {
@@ -429,8 +436,8 @@ async function cameraSwitch(){
 
 console.log("loop");
 
-  const permissions =  await findPermission()
-  const videoConstraint = permissions["camera"] === "granted" ? {deviceId:videoDevices[deviceIdIndex]}: false
+
+  const videoConstraint = Permmited ? {deviceId:videoDevices[deviceIdIndex]}: false
   const constrain  = {
     video:videoConstraint
   }
@@ -522,11 +529,13 @@ function stopStreamedVideo(videoElem) {
 socket.on("peerId",async(param)=>{
 
 
-const permissions = await findPermission()
+const permissions = Permmited
 
 
 const ID = param["userID"]
-peer.connect(param["peerId"]);
+ peer.connect(param["peerId"]);
+
+
 numberOfUser++;
 localData.push({name:param["name"],userID:param["userID"]})
 createUsers(param)
@@ -534,7 +543,7 @@ createNotifcation({message:param["name"]+" has Joined",leave:false,sendChat:true
 caller = peer.call(param["peerId"], myLocalStream,{ metadata: 
   { "ID": userID,"name":username,permissions:permissions}});
 peerConnections.push(caller)  
-createDisconnectListner(caller)
+
 
   let preventEmit = 0;
   caller.on('stream', function(theirStream) {
@@ -552,31 +561,6 @@ createDisconnectListner(caller)
 
 })
 
-const  findPermission = async ()=>{
-
- const mic = navigator.permissions.query({name: 'microphone'})
-  .then((permissionObj) => {
-    return permissionObj.state
-  })
-  .catch((error) => {
-   console.log('Got error :', error);
-  })
- 
- const cam =  navigator.permissions.query({name: 'camera'})
-  .then((permissionObj) => {
-    return permissionObj.state
-  })
-  .catch((error) => {
-   console.log('Got error :', error);
-  })
-
-
-  return {camera:await cam,microphone:await mic}
-
-
-}
-
-
 
 const createCall =  (stream,permissions)=>{
 
@@ -589,7 +573,7 @@ const createCall =  (stream,permissions)=>{
        numberOfUser++;
        caller = call
        peerConnections.push(caller)
-       createDisconnectListner(caller)
+     
      call.answer(stream); 
      let preventEmit = 0;
      call.on('stream', function(theirStream) {
@@ -618,31 +602,31 @@ const createCall =  (stream,permissions)=>{
 
 
 }
-function autoToggle(permission,id) {
+function autoToggle(Permmited,id) {
   
   if(id != null){
 
-    if(permission["camera"] != "granted")toggleVideoSettings("camera",id)
+    if(!Permmited)toggleVideoSettings("camera",id)
 
-    if(permission["microphone"] != "granted")toggleVideoSettings("mic",id)
+    if(!Permmited)toggleVideoSettings("mic",id)
 
     return
   }
 
 
-  if(permission["camera"] != "granted") turnOffCamera($("#videoButton")[0],false)
+  if(!Permmited) turnOffCamera($("#videoButton")[0],false)
 
-  if(permission["microphone"] != "granted") turnOffMic($("#audioButton")[0],false)
+  if(!Permmited) turnOffMic($("#audioButton")[0],false)
 
   
 }
 
-async function joining(peerID){
+async function joining(peerID,Permmited){
 
+ 
 
- const permissions =  await findPermission()
- const videoConstraint = permissions["camera"] === "granted" ? {facingMode :"environment"}: false
- const audioConstraint = permissions["microphone"] === "granted" ? true : false
+ let videoConstraint = Permmited ? {facingMode :"environment"}: false
+ let audioConstraint = Permmited ? true : false
  const constrain  = {
    video:videoConstraint,
    audio:audioConstraint
@@ -654,9 +638,9 @@ let  stream
 
     (!videoConstraint && !audioConstraint)  ?
     stream = new MediaStream([createEmptyAudioTrack(), createEmptyVideoTrack({ width:640, height:480 })])  : stream =  await navigator.mediaDevices.getUserMedia(constrain)   
-     createCall(stream,permissions)
+     createCall(stream,Permmited)
 
-     socket.emit("joining",{peerId:peerID,name:username,userID:userID,permissions:permissions})
+     socket.emit("joining",{peerId:peerID,name:username,userID:userID,permissions:Permmited})
   
     } catch (error) {
    
@@ -675,6 +659,7 @@ let  stream
 //creating if they dont have audio
 const createEmptyAudioTrack = () => {
   fakeStream =true
+
   const ctx = new AudioContext();
   const oscillator = ctx.createOscillator();
   const dst = oscillator.connect(ctx.createMediaStreamDestination());
@@ -845,8 +830,8 @@ function createVideoWrapper(stream,ID){
  
  $(videoelemet).data("data-id",ID)
  $(videoelemet).attr("data-id",ID)
- $(videoelemet).attr('webkit-playsinline', '');
- $(videoelemet).attr('playsinline', '');
+ $(videoelemet).attr('webkit-playsinline', 'true');
+ $(videoelemet).attr('playsinline', 'true');
 
 
   videoelemet.srcObject = stream
